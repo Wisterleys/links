@@ -1,3 +1,22 @@
+.ulsImp{
+    width: 90%;
+}
+.lisImp{
+    margin-bottom: 10px;
+    width: 100%;
+}
+.menu{
+    display: flex;
+    width: 50px;
+    padding: 3px;
+    list-style: none;
+    float: right;
+    transform: translateY(-100%);
+}
 .btnEdit{
+    width: 30px;
+    margin-right: 10px;
+}
+.btnDel{
     width: 30px;
 }

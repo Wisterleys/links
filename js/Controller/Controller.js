@@ -1,10 +1,18 @@
 class Controller{
     constructor(){
         this._model;
-
+        this.initial()
+        this.realTime()
     }
     initial(){
         this.model= new Model()
+    }
+    realTime(){
+        this.model.getFireBaseRef().on("value",snapshot=>{
+            if(snapshot.val()){
+                console.log(snapshot.val())
+            }
+        })
     }
     createTags(obj={}){ 
         /*

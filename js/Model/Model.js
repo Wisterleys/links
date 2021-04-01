@@ -2,6 +2,21 @@ class Model{
     constructor(){
         this.connect();
     }
+    updateFirebase(json,name){
+        if(name){
+         json.name=name
+         this.getFireBaseRef().child(json.key).set(json)
+        }
+     }
+    deleteFirebase(key){
+        this.getFireBaseRef().child(key).remove()
+    }
+    getFireBaseRef(reff="list"){
+        return firebase.database().ref(reff)
+    }
+    createFirebase(json){
+        this.getFireBaseRef().push().set(json)
+    }
     connect(){
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional

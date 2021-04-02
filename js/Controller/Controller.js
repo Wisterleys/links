@@ -12,6 +12,7 @@ class Controller{
     listener(){
         this.onP()
         this.blurP()
+        this.onDelete()
     }
     onImp(){
         $(".btnAdd")[0].on("click",e=>{
@@ -35,6 +36,13 @@ class Controller{
             el.on("blur",e=>{
                 e.target.contentEditable=false
                 console.log(e.target)
+            })
+        });
+    }
+    onDelete(){
+        $(".btnDel").forEach(el=> {
+            el.on("click",e=>{
+                e.target.parentNode.parentNode.parentNode.remove()
             })
         });
     }

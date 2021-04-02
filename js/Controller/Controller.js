@@ -8,6 +8,23 @@ class Controller{
         this.model= new Model()
         this.onP()
         this.blurP()
+        this.onImp()
+    }
+    onImp(){
+        $(".btnAdd")[0].on("click",e=>{
+            this.imp()
+        })
+    }
+    imp(value=false){
+        $('.ulsImp')[0].innerHTML+=`
+        <li class="lisImp">
+            <ul class="menu">
+                <li class="menuEdit"><input type="image" src="img/edit-small.png" alt="edite" class="btnEdit"></li>
+                <li class="menuEdit"><input type="image" src="img/delete.png" alt="edite" class="btnDel"></li>
+            </ul>
+            <p>${value?value:"Digite o nome do projeto..."}</p> 
+        </li>
+    `
     }
     blurP(){//Escuta todos os P que tem no DOM e ativado quando perde o foco
         $("p").forEach(el=> {

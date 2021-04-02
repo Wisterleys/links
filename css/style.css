@@ -11,7 +11,7 @@ main header{
     width: 90%;
 }
 .lisImp{
-    margin-bottom: 10px;
+    margin-bottom: 70px;
     width: 100%;
 }
 .menu{
@@ -20,6 +20,7 @@ main header{
     padding: 3px;
     list-style: none;
     float: right;
+    clear: both;
     transform: translateY(-100%);
 }
 .btnEdit{

@@ -6,6 +6,25 @@ class Controller{
     }
     initial(){
         this.model= new Model()
+        this.onP()
+        this.blurP()
+    }
+    blurP(){//Escuta todos os P que tem no DOM e ativado quando perde o foco
+        $("p").forEach(el=> {
+            el.on("blur",e=>{
+                e.target.contentEditable=false
+                console.log(e.target)
+            })
+        });
+    }
+    onP(){//Escuta todos os P que tem no DOM e ativado com o click
+        $("p").forEach(el=> {
+            el.on("dblclick",e=>{
+                e.target.contentEditable=true
+                e.target.focus()
+                console.log(e.target)
+            })
+        });
     }
     realTime(){
         this.model.getFireBaseRef().on("value",snapshot=>{

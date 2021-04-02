@@ -20,3 +20,16 @@
 .btnDel{
     width: 30px;
 }
+.btnAdd{
+    position: relative;
+    width:100%;
+    color: green;
+    background:linear-gradient(rgba(0, 24, 161, 0.144),rgb(0, 24, 161, 0.144),rgb(255,255,255),rgb(0, 24, 161, 0.144),rgb(0, 24, 161, 0.144)) ;
+    font-size: 15pt;
+    font-weight: bolder;
+    border-radius: 15px/20px;
+    outline: none;
+}
+.btnAdd:active{
+    background:linear-gradient(rgba(0, 161, 21, 0.466),rgb(0, 161, 21, 0.466),rgb(255,255,255),rgb(0, 161, 21, 0.466),rgb(0, 161, 21, 0.466)) ;
+}

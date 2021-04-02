@@ -2,11 +2,13 @@ class Controller{
     constructor(){
         this._model;
         this._dataset={key:"",el:""}
+        this._height;
         this.initial()
         this.realTime()
         this.onImp()
         this.onBtnDelete()
         this.onBtnX()
+        this.height=window.innerHeight
     }
     initial(){//Método que inicia os eventos e intacia a classe Model
         this.model= new Model()
@@ -76,6 +78,20 @@ class Controller{
                 let el = e.target.parentNode.parentNode.parentNode.$("p")[0].cloneNode(true)
                 $("#sw").innerHTML=""
                 $("#sw").appendChild(el)
+                if($("#warning").offsetHeight>this.height){
+                    console.log($("#warning").offsetHeight>this.height)
+                    $("#warning").style.position="absolute"
+                    $("#warning").style.height="50%"
+                    $("#warning").style.width="95%"
+                    $("#sw").style.overflowY="scroll"
+                    $("#warning").style.transform="translate(-50%,-100%)"
+                }else{
+                    $("#warning").style.position="fixed"
+                    $("#warning").style.height="auto"
+                    $("#warning").style.width="auto"
+                    $("#sw").style.overflowY="auto"
+                    $("#warning").style.transform="translate(-50%,-50%)"
+                }
                 $("#warning").classList.toggle("fall")
                 console.log(el)
             })
@@ -137,6 +153,8 @@ class Controller{
         return tag
     }
     //GETs e SETs
+    get height(){return this._height}
+    set height(value){this._height=value}
     get dataset(){return this._dataset}
     set dataset(value){this._dataset=value}
     get model(){return this._model}

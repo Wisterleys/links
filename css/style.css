@@ -1,7 +1,7 @@
 main{
     margin:auto;
     padding:0px;
-    width: 90%;
+    width: 85%;
 }
 main header{
     margin: 0px;
@@ -45,6 +45,8 @@ main header{
 }
 #warning{
     position: fixed;
+    width: auto;
+    height: auto;
     z-index: 20;
     visibility: hidden;
     top:-150%;

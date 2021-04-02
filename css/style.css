@@ -45,6 +45,7 @@ main header{
 }
 #warning{
     position: fixed;
+    z-index: 20;
     visibility: hidden;
     top:-150%;
     left: 50%;

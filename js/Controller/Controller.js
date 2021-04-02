@@ -16,8 +16,11 @@ class Controller{
     }
     onImp(){
         $(".btnAdd")[0].on("click",e=>{
-            this.imp("add...")
+            this.create()
         })
+    }
+    create(){
+        this.model.createFirebase({msg:"Digite o nome do projeto..."})
     }
     imp(value=false,dataset=false){
         let li = this.createTags({place:$('.ulsImp')[0],tag:"li",class:"lisImp"})
@@ -64,7 +67,10 @@ class Controller{
     realTime(){
         this.model.getFireBaseRef().on("value",snapshot=>{
             if(snapshot.val()){
-                console.log(snapshot.val())
+                $('.ulsImp')[0].innerHTML=""
+                snapshot.forEach(snapshotItem=>{
+                    this.imp(snapshotItem.val().msg,snapshotItem.key)
+                })
             }
         })
     }

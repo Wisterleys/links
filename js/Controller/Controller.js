@@ -5,24 +5,24 @@ class Controller{
         this.realTime()
         this.onImp()
     }
-    initial(){
+    initial(){//Método que inicia os eventos e intacia a classe Model
         this.model= new Model()
         this.listener()
     }
-    listener(){
+    listener(){//Método que chama as escutas
         this.onP()
         this.blurP()
         this.onDelete()
     }
-    onImp(){
+    onImp(){//Escuta para criar novo campo na lista
         $(".btnAdd")[0].on("click",e=>{
             this.create()
         })
     }
-    create(){
+    create(){//Método que usa o objeto Model para salvar dados no DB
         this.model.createFirebase({msg:"Digite o nome do projeto..."})
     }
-    imp(value=false,dataset=false){
+    imp(value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
         let li = this.createTags({place:$('.ulsImp')[0],tag:"li",class:"lisImp"})
         dataset?li.dataset.key=dataset:0
         let ul = this.createTags({place:li,tag:"ul",class:"menu"})
@@ -35,8 +35,6 @@ class Controller{
             place:lii,tag:"input",class:"btnDel",alt:"delete",type:"image",src:"img/delete.png"
         })
         this.createTags({place:li,tag:"p",insertTag:value?value:"Digite o nome do projeto..."})
-        
-        this.listener()
     }
     blurP(){//Escuta todos os P que tem no DOM e ativado quando perde o foco
         $("p").forEach(el=> {
@@ -46,7 +44,7 @@ class Controller{
             })
         });
     }
-    onDelete(){
+    onDelete(){//Escuta para o botão deletar
         $(".btnDel").forEach(el=> {
             el.on("click",e=>{
                 e.target.parentNode.parentNode.parentNode.remove()
@@ -64,7 +62,7 @@ class Controller{
             })
         });
     }
-    realTime(){
+    realTime(){//Impressão das informações do DB para tela em tempo real
         this.model.getFireBaseRef().on("value",snapshot=>{
             if(snapshot.val()){
                 $('.ulsImp')[0].innerHTML=""
@@ -72,9 +70,10 @@ class Controller{
                     this.imp(snapshotItem.val().msg,snapshotItem.key)
                 })
             }
+            this.listener()
         })
     }
-    createTags(obj={}){ 
+    createTags(obj={}){ //Método modelo para criar TAGs na tela
         /*
         exemplo
         obj={
@@ -100,6 +99,7 @@ class Controller{
         }
         return tag
     }
+    //GETs e SETs
     get model(){return this._model}
     set model(value){this._model=value}
     

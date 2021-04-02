@@ -18,11 +18,13 @@ class Controller{
         });
     }
     onP(){//Escuta todos os P que tem no DOM e ativado com o click
-        $("p").forEach(el=> {
-            el.on("dblclick",e=>{
-                e.target.contentEditable=true
-                e.target.focus()
-                console.log(e.target)
+        $(".btnEdit").forEach(el=> {
+            el.on("click",e=>{
+                let btn = e.target.parentNode.parentNode.parentNode.$("p")[0]
+                btn.contentEditable=true
+                btn.focus()
+                console.log(btn.innerHTML)
+              
             })
         });
     }

@@ -82,8 +82,6 @@ class Controller{
                 let btn = e.target.parentNode.parentNode.parentNode.$("p")[0]
                 btn.contentEditable=true
                 btn.focus()
-                console.log(e.target.parentNode.parentNode.parentNode.$("p")[0])
-              
             })
         });
     }

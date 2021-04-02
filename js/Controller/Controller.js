@@ -4,6 +4,8 @@ class Controller{
         this.initial()
         this.realTime()
         this.onImp()
+        this.onBtnDelete()
+        this.onBtnX()
     }
     initial(){//Método que inicia os eventos e intacia a classe Model
         this.model= new Model()
@@ -47,10 +49,26 @@ class Controller{
             })
         });
     }
-    onDelete(){//Escuta para o botão deletar
+    onBtnX(){
+        $("#x").on("click",e=>{
+            $("#warning").classList.toggle("fall")
+            
+        })
+    }
+    onBtnDelete(){
+        $("#exc").on("click",e=>{
+            console.log(e.target.parentNode)
+            $("#x").click()
+        })
+    }
+    onDelete(){//Escuta para o modal deletar
         $(".btnDel").forEach(el=> {
             el.on("click",e=>{
-                e.target.parentNode.parentNode.parentNode.remove()
+                let el = e.target.parentNode.parentNode.parentNode.$("p")[0].cloneNode(true)
+                $("#sw").innerHTML=""
+                $("#sw").appendChild(el)
+                $("#warning").classList.toggle("fall")
+                console.log(el)
             })
         });
     }

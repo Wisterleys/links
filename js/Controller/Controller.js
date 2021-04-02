@@ -1,6 +1,7 @@
 class Controller{
     constructor(){
         this._model;
+        this._dataset={key:"",el:""}
         this.initial()
         this.realTime()
         this.onImp()
@@ -57,13 +58,16 @@ class Controller{
     }
     onBtnDelete(){
         $("#exc").on("click",e=>{
-            console.log(e.target.parentNode)
+            this.model.deleteFirebase(this.dataset.key)
+            this.dataset.el.remove()
             $("#x").click()
         })
     }
     onDelete(){//Escuta para o modal deletar
         $(".btnDel").forEach(el=> {
             el.on("click",e=>{
+                this.dataset.key=e.target.parentNode.parentNode.parentNode.dataset.key
+                this.dataset.el=e.target.parentNode.parentNode.parentNode
                 let el = e.target.parentNode.parentNode.parentNode.$("p")[0].cloneNode(true)
                 $("#sw").innerHTML=""
                 $("#sw").appendChild(el)
@@ -121,6 +125,8 @@ class Controller{
         return tag
     }
     //GETs e SETs
+    get dataset(){return this._dataset}
+    set dataset(value){this._dataset=value}
     get model(){return this._model}
     set model(value){this._model=value}
     

@@ -44,7 +44,7 @@ main header{
     background:linear-gradient(90deg,rgba(0, 161, 21, 0.466),rgb(0, 161, 21, 0.466),rgb(255,255,255),rgb(0, 161, 21, 0.466),rgb(0, 161, 21, 0.466)) ;
 }
 #warning{
-    position: absolute;
+    position: fixed;
     top:-150%;
     left: 50%;
     transform: translate(-50%,-50%);

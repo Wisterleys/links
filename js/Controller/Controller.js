@@ -3,16 +3,19 @@ class Controller{
         this._model;
         this.initial()
         this.realTime()
+        this.onImp()
     }
     initial(){
         this.model= new Model()
+        this.listener()
+    }
+    listener(){
         this.onP()
         this.blurP()
-        this.onImp()
     }
     onImp(){
         $(".btnAdd")[0].on("click",e=>{
-            this.imp()
+            this.imp("add...")
         })
     }
     imp(value=false){
@@ -25,6 +28,7 @@ class Controller{
             <p>${value?value:"Digite o nome do projeto..."}</p> 
         </li>
     `
+    this.listener()
     }
     blurP(){//Escuta todos os P que tem no DOM e ativado quando perde o foco
         $("p").forEach(el=> {
@@ -40,7 +44,7 @@ class Controller{
                 let btn = e.target.parentNode.parentNode.parentNode.$("p")[0]
                 btn.contentEditable=true
                 btn.focus()
-                console.log(btn.innerHTML)
+                console.log(e.target.parentNode.parentNode.parentNode.$("p")[0])
               
             })
         });

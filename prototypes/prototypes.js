@@ -12,5 +12,5 @@ Element.prototype.on=function(events,func){
         this.addEventListener(event,func)
     });
 }
-Element.prototype.$=function(e){return e.search("#")>-1?document.querySelector(e):document.querySelectorAll(e)}
+Element.prototype.$=function(e){return e.search("#")>-1?this.querySelector(e):this.querySelectorAll(e)}
 Element.prototype.toggle=function(){this.classList.toggle("close")}

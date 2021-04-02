@@ -36,11 +36,14 @@ class Controller{
         })
         this.createTags({place:li,tag:"p",insertTag:value?value:"Digite o nome do projeto..."})
     }
+    update(msg,id){
+        this.model.updateFirebase(msg,id)
+    }
     blurP(){//Escuta todos os P que tem no DOM e ativado quando perde o foco
         $("p").forEach(el=> {
             el.on("blur",e=>{
                 e.target.contentEditable=false
-                console.log(e.target)
+                this.update(e.target.innerHTML,e.target.parentNode.dataset.key)
             })
         });
     }

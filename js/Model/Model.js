@@ -2,10 +2,11 @@ class Model{
     constructor(){
         this.connect();
     }
-    updateFirebase(json,name){//Método que sabe realizar atualação no DB
-        if(name){
-         json.name=name
-         this.getFireBaseRef().child(json.key).set(json)
+    updateFirebase(msg,key){//Método que sabe realizar atualação no DB
+        let json={}
+        if(msg){
+         json.msg=msg
+         this.getFireBaseRef().child(key).set(json)
         }
      }
     deleteFirebase(key){//Método que sabe excluir

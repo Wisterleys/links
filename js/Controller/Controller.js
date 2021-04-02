@@ -19,8 +19,9 @@ class Controller{
             this.imp("add...")
         })
     }
-    imp(value=false){
+    imp(value=false,dataset=false){
         let li = this.createTags({place:$('.ulsImp')[0],tag:"li",class:"lisImp"})
+        dataset?li.dataset.key=dataset:0
         let ul = this.createTags({place:li,tag:"ul",class:"menu"})
         let lii = this.createTags({place:ul,tag:"li",class:"menuEdit"})
         this.createTags({

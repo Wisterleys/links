@@ -57,6 +57,15 @@ main header{
     top:50%;
     animation: fall 1s;
 }
+.save{
+    position: relative;
+    left: 100%;
+    color:green;
+    transform: translate(-50%,-600%);
+    font-weight: bolder;
+    animation: ride-up-save 2s;
+}
+@keyframes ride-up-save {0%{transform: translate(-50%,0%);}100%{transform: translate(-50%,-600%);}}
 @keyframes fall {0%{top:-150%}100%{top:50%}}
 @keyframes ride-up {0%{top:50%}100%{top:-150%;}}
 #w{

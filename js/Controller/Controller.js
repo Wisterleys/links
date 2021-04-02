@@ -42,13 +42,18 @@ class Controller{
     update(msg,id){
         this.model.updateFirebase(msg,id)
     }
-    blurP(){//Escuta todos os P que tem no DOM e ativado quando perde o foco
-        $("p").forEach(el=> {
-            el.on("blur",e=>{
-                e.target.contentEditable=false
-                this.update(e.target.innerHTML,e.target.parentNode.dataset.key)
-            })
-        });
+    save(key){//Criando mensagem de aviso informando que atualização foi feita com sucesso
+        let e=false;
+        [...$("li[data-key]")].forEach(el=>{
+            if(el.dataset.key==key){
+                e = this.createTags({
+                    place:el,tag:"div",
+                    class:"save",
+                    insertTag:"Salvo!"})
+            }
+        })
+        
+        e?setTimeout(()=>e.remove(),2000):0
     }
     onBtnX(){
         $("#x").on("click",e=>{
@@ -73,6 +78,15 @@ class Controller{
                 $("#sw").appendChild(el)
                 $("#warning").classList.toggle("fall")
                 console.log(el)
+            })
+        });
+    }
+    blurP(){//Escuta todos os P que tem no DOM e ativado quando perde o foco
+        $("p").forEach(el=> {
+            el.on("blur",e=>{
+                e.target.contentEditable=false
+                this.update(e.target.innerHTML,e.target.parentNode.dataset.key)
+                this.save(e.target.parentNode.dataset.key)
             })
         });
     }

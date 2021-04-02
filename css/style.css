@@ -45,9 +45,11 @@ main header{
 }
 #warning{
     position: fixed;
+    visibility: hidden;
     top:-150%;
     left: 50%;
     transform: translate(-50%,-50%);
+    transition: all 1s;
     animation: ride-up 1s;
 }
 #warning.fall{
@@ -56,7 +58,7 @@ main header{
     animation: fall 1s;
 }
 @keyframes fall {0%{top:-150%}100%{top:50%}}
-@keyframes ride-up {0%{top:50%}100%{top:-150%;visibility: hidden;}}
+@keyframes ride-up {0%{top:50%}100%{top:-150%;}}
 #w{
     width: 100%;
     padding: 5px;

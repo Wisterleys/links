@@ -15,8 +15,8 @@ class Model{
     getFireBaseRef(reff="list"){
         return firebase.database().ref(reff)
     }
-    createFirebase(json){//Método que cria
-        this.getFireBaseRef().push().set(json)
+    createFirebase(ref,json){//Método que cria
+        this.getFireBaseRef(ref).push().set(json)
     }
     connect(){//Método que realiza a conexão no DB
         var firebaseConfig = {

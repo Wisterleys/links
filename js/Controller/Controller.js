@@ -9,10 +9,12 @@ class Controller{
         this.onImp()
         this.onBtnDelete()
         this.onBtnX()
-        this.listenToAllFolders()
         this.listenBtnBack()
         this.listenBtnCreateFolder()
         this.height=window.innerHeight
+        this.folder[2]=true
+        this.realTime("folders","#ul-folder")
+        this.folder[2]=false
     }
     initial(){//Método que inicia os eventos e intacia a classe Model
         this.model= new Model()
@@ -63,8 +65,9 @@ class Controller{
                 f.target.src=this.folder[1]
                 this.AllHidde(".folders",i)
                 this.folder[2]=true
-                this.realTime()
-                $("#back").hidden=false
+                let data = f.target.parentNode
+                console.log(data.dataset.key)
+                //this.realTime("list",".ulsImp")//Aqui passa o nome da pasta que será lida lá no firebase
                 $(".btnAdd")[0].hidden=false
                 $("#createFolder").hidden=true
             })
@@ -75,29 +78,34 @@ class Controller{
             this.create()
         })
     }
-    createFolder(){
+    impFolder(dataset=false){
+        let li = this.createTags({
+            place:$("#ul-folder"),
+            tag:"li",
+            class:"folders"
+        })
+        dataset?li.dataset.key=dataset:0
+        dataset = JSON.parse(dataset)
+        this.createTags({
+         place:li,
+         tag:"input",
+         type:"image",
+         src:this.folder[0]
+         })
+         this.createTags({
+             place:li,
+             tag:"br"
+             })
+         this.createTags({
+             place:li,
+             tag:"span",
+             insertTag:dataset.alias
+             })
+    }
+    createFolder(){//Método que usa o objeto Model para salvar pastas no DB
         let name = prompt("Qual name?")
         if(name){
-           let li = this.createTags({
-               place:$("#ul-folder"),
-               tag:"li",
-               class:"folders"
-           })
-           this.createTags({
-            place:li,
-            tag:"input",
-            type:"image",
-            src:this.folder[0]
-            })
-            this.createTags({
-                place:li,
-                tag:"br"
-                })
-            this.createTags({
-                place:li,
-                tag:"span",
-                insertTag:name
-                })
+            this.model.createFirebase("folders",{nameFolder:name.replace(/[\ ]/ig,"-"),alias:name})
         }
     }
     create(){//Método que usa o objeto Model para salvar dados no DB
@@ -191,15 +199,24 @@ class Controller{
             })
         });
     }
-    realTime(folder=false){//Impressão das informações do DB para tela em tempo real
+    realTime(folder=false,imp){//Impressão das informações do DB para tela em tempo real
         if(this.folder[2]){
             this.model.getFireBaseRef(folder?folder:"list").on("value",snapshot=>{
                 if(snapshot.val()){
-                    $('.ulsImp')[0].innerHTML=""
-                    snapshot.forEach(snapshotItem=>{
-                        this.imp(snapshotItem.val().msg,snapshotItem.key)
-                    })
+                    imp.search("#")>-1?$(imp).innerHTML="":$(imp)[0].innerHTML=""
+                    if(folder == "folders"){
+                        snapshot.forEach(snapshotItem=>{
+                            let dataset = Object.assign(snapshotItem.val(),{key:snapshotItem.key})
+                            this.impFolder(JSON.stringify(dataset))
+                        })
+                    }else{
+                        snapshot.forEach(snapshotItem=>{
+                            this.imp(snapshotItem.val().msg,snapshotItem.key)
+                        })
+                    }
                 }
+                !folder?$("#back").hidden=false:0
+                this.listenToAllFolders()
                 this.listener()
             })
         }

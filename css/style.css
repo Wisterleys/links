@@ -100,7 +100,12 @@ main header{
     left: 100%;
     transform: translate(-50%,-65%);
 }
+#createFolder{
+    float: right;
+}
+#ul-folder{list-style: none;}
 .folders{
+    clear: both;
     visibility: visible;
 }
 .folders.hidden{

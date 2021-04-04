@@ -38,6 +38,7 @@ class Controller{
             $('.ulsImp')[0].innerHTML=""
             $("#back").hidden=true
             $(".btnAdd")[0].hidden=true
+            $("#createFolder").hidden=false
             this.currentFolder.src="img/"+this.folder[0]
         })
     }
@@ -51,6 +52,7 @@ class Controller{
                 this.realTime()
                 $("#back").hidden=false
                 $(".btnAdd")[0].hidden=false
+                $("#createFolder").hidden=true
             })
         })
     }

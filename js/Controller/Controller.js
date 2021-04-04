@@ -1,13 +1,16 @@
 class Controller{
     constructor(){
         this._model;
+        this._folder=["folder.png","open-folder.png",false]
+        this._currentFolder;
         this._dataset={key:"",el:""}
         this._height;
         this.initial()
-        this.realTime()
         this.onImp()
         this.onBtnDelete()
         this.onBtnX()
+        this.listenToAllFolders()
+        this.listenBtnBack()
         this.height=window.innerHeight
     }
     initial(){//Método que inicia os eventos e intacia a classe Model
@@ -18,6 +21,40 @@ class Controller{
         this.onP()
         this.blurP()
         this.onDelete()
+    }
+    AllHidde(tag,index=-1){
+       $(tag).forEach(t=>{
+            t.classList.add("hidden")
+        })
+        $(tag)[index].classList.remove("hidden")
+        index>-1?$(tag)[index].classList.remove("hidden"):0
+    }
+    reloadPage(){
+        document.location.reload({forcedReload:true});
+    }
+    listenBtnBack(){
+        $("#back").on("click",e=>{
+            //this.reloadPage()
+            $('.ulsImp')[0].innerHTML=""
+            $("#back").hidden=true
+            $(".btnAdd")[0].hidden=true
+            $("#createFolder").hidden=false
+            this.currentFolder.src="img/"+this.folder[0]
+        })
+    }
+    listenToAllFolders(){
+        $(".folders").forEach((folder,i)=>{
+            folder.$("input")[0].on("click",f=>{
+                this.currentFolder=f.target
+                f.target.src="img/"+this.folder[1]
+                this.AllHidde(".folders",i)
+                this.folder[2]=true
+                this.realTime()
+                $("#back").hidden=false
+                $(".btnAdd")[0].hidden=false
+                $("#createFolder").hidden=true
+            })
+        })
     }
     onImp(){//Escuta para criar novo campo na lista
         $(".btnAdd")[0].on("click",e=>{
@@ -115,16 +152,18 @@ class Controller{
             })
         });
     }
-    realTime(){//Impressão das informações do DB para tela em tempo real
-        this.model.getFireBaseRef().on("value",snapshot=>{
-            if(snapshot.val()){
-                $('.ulsImp')[0].innerHTML=""
-                snapshot.forEach(snapshotItem=>{
-                    this.imp(snapshotItem.val().msg,snapshotItem.key)
-                })
-            }
-            this.listener()
-        })
+    realTime(folder=false){//Impressão das informações do DB para tela em tempo real
+        if(this.folder[2]){
+            this.model.getFireBaseRef(folder?folder:"list").on("value",snapshot=>{
+                if(snapshot.val()){
+                    $('.ulsImp')[0].innerHTML=""
+                    snapshot.forEach(snapshotItem=>{
+                        this.imp(snapshotItem.val().msg,snapshotItem.key)
+                    })
+                }
+                this.listener()
+            })
+        }
     }
     createTags(obj={}){ //Método modelo para criar TAGs na tela
         /*
@@ -153,6 +192,10 @@ class Controller{
         return tag
     }
     //GETs e SETs
+    get currentFolder(){return this._currentFolder}
+    set currentFolder(value){this._currentFolder=value}
+    get folder(){return this._folder}
+    set folder(value){this._folder=value}
     get height(){return this._height}
     set height(value){this._height=value}
     get dataset(){return this._dataset}

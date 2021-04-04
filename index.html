@@ -26,14 +26,24 @@
                 <input type="button" value="Excluir" id="exc">
             </footer>
         </div>
-        <header>
-            <h1>LISTA</h1>
+
+        <header class="body">
+            <nav>
+                <ul id="ul-folder">
+                    <input type="image" src="img/new-folder.png" alt="" id="createFolder">
+                    <li id="back" hidden><input type="image" src="img/back.png" alt=""></li>
+                    <li class="folders">
+                        <input type="image" src="img/folder.png" alt=""><br>
+                        <span>LIST</span>
+                    </li>
+                </ul>
+            </nav>
         </header>
-        <section>
+        <section class="body">
             <ul class="ulsImp">
                 
             </ul>
-            <input type="button" value="+" class="btnAdd">
+            <input type="button" value="+" class="btnAdd" hidden>
         </section>
     </main>
     <script src="prototypes/prototypes.js"></script>

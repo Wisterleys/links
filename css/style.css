@@ -102,11 +102,28 @@ main header{
 }
 #createFolder{
     float: right;
+    margin-bottom: 50px;
 }
-#ul-folder{list-style: none;}
+#ul-folder{list-style: none; clear: both;}
 .folders{
-    clear: both;
+    width: 100px;
+    margin: 10px;
+    padding: 0px;
+    display: inline-block;
     visibility: visible;
+}
+.folders input{
+    object-position: center center;
+    object-fit: contain;
+}
+.folders span{
+    width: 100%;
+    overflow-x: hidden;
+    transition: all 1s;
+}
+.folders span:hover{
+    overflow-x: auto;
+    background: rgb(189, 163, 163);
 }
 .folders.hidden{
     visibility: hidden;

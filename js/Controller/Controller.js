@@ -1,7 +1,7 @@
 class Controller{
     constructor(){
         this._model;
-        this._folder=["folder.png","open-folder.png",false]
+        this._folder=["img/folder.png","img/open-folder.png",false]
         this._currentFolder;
         this._dataset={key:"",el:""}
         this._height;
@@ -11,6 +11,7 @@ class Controller{
         this.onBtnX()
         this.listenToAllFolders()
         this.listenBtnBack()
+        this.listenBtnCreateFolder()
         this.height=window.innerHeight
     }
     initial(){//Método que inicia os eventos e intacia a classe Model
@@ -22,15 +23,24 @@ class Controller{
         this.blurP()
         this.onDelete()
     }
+    AllShow(tag){
+        $(tag).forEach(t=>{
+             t.classList.remove("hidden")
+         })
+     }
     AllHidde(tag,index=-1){
        $(tag).forEach(t=>{
             t.classList.add("hidden")
         })
-        $(tag)[index].classList.remove("hidden")
         index>-1?$(tag)[index].classList.remove("hidden"):0
     }
     reloadPage(){
         document.location.reload({forcedReload:true});
+    }
+    listenBtnCreateFolder(){
+        $("#createFolder").on("click",e=>{
+            this.createFolder()
+        })
     }
     listenBtnBack(){
         $("#back").on("click",e=>{
@@ -39,14 +49,18 @@ class Controller{
             $("#back").hidden=true
             $(".btnAdd")[0].hidden=true
             $("#createFolder").hidden=false
-            this.currentFolder.src="img/"+this.folder[0]
+            this.folder[2]=false
+            this.currentFolder.src=this.folder[0]
+            this.currentFolder.disabled=false
+            this.AllShow(".folders")
         })
     }
     listenToAllFolders(){
         $(".folders").forEach((folder,i)=>{
             folder.$("input")[0].on("click",f=>{
                 this.currentFolder=f.target
-                f.target.src="img/"+this.folder[1]
+                f.target.disabled=true
+                f.target.src=this.folder[1]
                 this.AllHidde(".folders",i)
                 this.folder[2]=true
                 this.realTime()
@@ -60,6 +74,31 @@ class Controller{
         $(".btnAdd")[0].on("click",e=>{
             this.create()
         })
+    }
+    createFolder(){
+        let name = prompt("Qual name?")
+        if(name){
+           let li = this.createTags({
+               place:$("#ul-folder"),
+               tag:"li",
+               class:"folders"
+           })
+           this.createTags({
+            place:li,
+            tag:"input",
+            type:"image",
+            src:this.folder[0]
+            })
+            this.createTags({
+                place:li,
+                tag:"br"
+                })
+            this.createTags({
+                place:li,
+                tag:"span",
+                insertTag:name
+                })
+        }
     }
     create(){//Método que usa o objeto Model para salvar dados no DB
         this.model.createFirebase({msg:"Digite o nome do projeto..."})

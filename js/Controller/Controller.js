@@ -1,15 +1,15 @@
 class Controller{
     constructor(){
         this._model;
-        this._folder=["folder.png","open-folder.png"]
+        this._folder=["folder.png","open-folder.png",false]
         this._dataset={key:"",el:""}
         this._height;
         this.initial()
-        this.realTime()
         this.onImp()
         this.onBtnDelete()
         this.onBtnX()
         this.listenToAllFolders()
+        this.listenBtnBack()
         this.height=window.innerHeight
     }
     initial(){//Método que inicia os eventos e intacia a classe Model
@@ -21,10 +21,28 @@ class Controller{
         this.blurP()
         this.onDelete()
     }
+    AllHidde(tag){
+        $(tag).forEach(t=>{
+            t.hidde=true
+        })
+    }
+    reloadPage(){
+        document.location.reload({forcedReload:true});
+    }
+    listenBtnBack(){
+        $("#back").on("click",e=>{
+            this.reloadPage()
+        })
+    }
     listenToAllFolders(){
         $(".folders").forEach(folder=>{
             folder.$("input")[0].on("click",f=>{
                 console.log(f.target.src="img/"+this.folder[1])
+                this.AllHidde(".folders")
+                f.target.hidde=false
+                this.folder[2]=true
+                this.realTime()
+                $("#back").hidde=false
             })
         })
     }
@@ -124,16 +142,18 @@ class Controller{
             })
         });
     }
-    realTime(){//Impressão das informações do DB para tela em tempo real
-        this.model.getFireBaseRef().on("value",snapshot=>{
-            if(snapshot.val()){
-                $('.ulsImp')[0].innerHTML=""
-                snapshot.forEach(snapshotItem=>{
-                    this.imp(snapshotItem.val().msg,snapshotItem.key)
-                })
-            }
-            this.listener()
-        })
+    realTime(folder=false){//Impressão das informações do DB para tela em tempo real
+        if(this.folder[2]){
+            this.model.getFireBaseRef(folder?folder:"list").on("value",snapshot=>{
+                if(snapshot.val()){
+                    $('.ulsImp')[0].innerHTML=""
+                    snapshot.forEach(snapshotItem=>{
+                        this.imp(snapshotItem.val().msg,snapshotItem.key)
+                    })
+                }
+                this.listener()
+            })
+        }
     }
     createTags(obj={}){ //Método modelo para criar TAGs na tela
         /*

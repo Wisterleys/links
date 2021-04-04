@@ -1,6 +1,7 @@
 class Controller{
     constructor(){
         this._model;
+        this._folder=["folder.png","open-folder.png"]
         this._dataset={key:"",el:""}
         this._height;
         this.initial()
@@ -8,6 +9,7 @@ class Controller{
         this.onImp()
         this.onBtnDelete()
         this.onBtnX()
+        this.listenToAllFolders()
         this.height=window.innerHeight
     }
     initial(){//Método que inicia os eventos e intacia a classe Model
@@ -18,6 +20,13 @@ class Controller{
         this.onP()
         this.blurP()
         this.onDelete()
+    }
+    listenToAllFolders(){
+        $(".folders").forEach(folder=>{
+            folder.$("input")[0].on("click",f=>{
+                console.log(f.target.src="img/"+this.folder[1])
+            })
+        })
     }
     onImp(){//Escuta para criar novo campo na lista
         $(".btnAdd")[0].on("click",e=>{
@@ -153,6 +162,8 @@ class Controller{
         return tag
     }
     //GETs e SETs
+    get folder(){return this._folder}
+    set folder(value){this._folder=value}
     get height(){return this._height}
     set height(value){this._height=value}
     get dataset(){return this._dataset}

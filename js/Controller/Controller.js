@@ -21,10 +21,12 @@ class Controller{
         this.blurP()
         this.onDelete()
     }
-    AllHidde(tag){
-        $(tag).forEach(t=>{
-            t.hidde=true
+    AllHidde(tag,index=-1){
+       $(tag).forEach(t=>{
+            t.classList.add("hidden")
         })
+        $(tag)[index].classList.remove("hidden")
+        index>-1?setTimeout(()=>$(tag)[index].classList.remove("hidden"),100):0
     }
     reloadPage(){
         document.location.reload({forcedReload:true});
@@ -35,14 +37,13 @@ class Controller{
         })
     }
     listenToAllFolders(){
-        $(".folders").forEach(folder=>{
+        $(".folders").forEach((folder,i)=>{
             folder.$("input")[0].on("click",f=>{
                 console.log(f.target.src="img/"+this.folder[1])
-                this.AllHidde(".folders")
-                f.target.hidde=false
+                this.AllHidde(".folders",i)
                 this.folder[2]=true
                 this.realTime()
-                $("#back").hidde=false
+                $("#back").hidden=false
             })
         })
     }

@@ -133,7 +133,7 @@ class Controller{
         
     }
     createFolder(){//Método que usa o objeto Model para salvar pastas no DB
-        let name = prompt("Qual name?")
+        let name = prompt("Digite o nome da nova pasta")
         if(name){
             this.model.createFirebase("folders",{nameFolder:name.replace(/[\ ]/ig,"-"),alias:name})
         }

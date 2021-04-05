@@ -10,7 +10,7 @@ class Model{
         }
      }
     deleteFirebase(nameFolder,key){//Método que sabe excluir
-        this.getFireBaseRef(nameFolder).child(key).remove()
+        return this.getFireBaseRef(nameFolder).child(key).remove()
     }
     getFireBaseRef(reff="list"){
         return firebase.database().ref(reff)

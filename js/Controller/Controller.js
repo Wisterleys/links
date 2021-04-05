@@ -219,6 +219,16 @@ class Controller{
             })
         });
     }
+    deleteFolder(refFiles){
+        return new Promise((resolve,reject)=>{
+           this.model.getFireBaseRef(refFiles).on("values",snapshot=>{
+                
+            })
+        })
+    }
+    deleteFolders(){
+
+    }
     editFolder(){
         let name = prompt("Edita nome da pasta");
         if(name){

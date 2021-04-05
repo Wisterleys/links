@@ -7,8 +7,15 @@ main header{
     margin: 0px;
     width: 100%;
 }
-p{
+p{  
     padding: 5px;
+}
+@media screen and (max-width:370px) {
+    p{
+        padding: 0px;
+        width: 100%;
+        overflow: hidden;
+    }
 }
 .ulsImp{
     width: 90%;

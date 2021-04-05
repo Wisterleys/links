@@ -57,11 +57,12 @@ class Controller{
             $("#ul-folder").innerHTML=""
             this.realTime("folders","#ul-folder")
             this.folder[2]=false
+            $(".checkbox").forEach(e=>e.hidden=false)
         })
     }
     listenToAllFolders(){
         $(".folders").forEach((folder,i)=>{
-            folder.$("input")[0].on("click",f=>{
+            folder.$("input")[1].on("click",f=>{
                 this.currentFolder=f.target
                 f.target.disabled=true
                 f.target.src=this.folder[1]
@@ -75,6 +76,7 @@ class Controller{
                 $(".btnAdd")[0].hidden=false
                 $("#createFolder").hidden=true
                 $("#back").hidden=false
+                $(".checkbox").forEach(e=>e.hidden=true)
             })
         })
     }
@@ -87,7 +89,8 @@ class Controller{
         let li = this.createTags({
             place:$("#ul-folder"),
             tag:"li",
-            class:"folders"
+            class:"folders",
+            insertTag:`<input type="checkbox" class="checkbox">`
         })
         dataset?li.dataset.key=dataset:0
         dataset = JSON.parse(dataset)
@@ -182,7 +185,6 @@ class Controller{
                     $("#warning").style.transform="translate(-50%,-50%)"
                 }
                 $("#warning").classList.toggle("fall")
-                console.log(el)
             })
         });
     }

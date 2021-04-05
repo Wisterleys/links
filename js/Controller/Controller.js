@@ -63,6 +63,7 @@ class Controller{
     listenToAllFolders(){
         $(".folders").forEach((folder,i)=>{
             folder.$("input")[1].on("click",f=>{
+                $("#menu-folders").classList.remove("show")
                 this.currentFolder=f.target
                 f.target.disabled=true
                 f.target.src=this.folder[1]
@@ -94,6 +95,11 @@ class Controller{
         lii=this.createTags({place:ul,tag:"li",class:"menuEdit"})
         this.createTags({
             place:lii,tag:"input",class:"btnDelFolder",alt:"delete",type:"image",src:"img/delete.png"
+        }).on("click",e=>{
+            this.deleteFolders()
+            .then(res=>this.reloadPage())
+            .catch(err=>console.log(err))
+            
         })
     }
     impFolder(dataset=false){
@@ -219,14 +225,68 @@ class Controller{
             })
         });
     }
-    deleteFolder(refFiles){
+    deleteFolder(vetor){
         return new Promise((resolve,reject)=>{
-           this.model.getFireBaseRef(refFiles).on("values",snapshot=>{
-                
-            })
+            let promises=[]
+            let promisesTwo=[]
+            if(vetor){
+                vetor.forEach(folder=>{
+                    promises.push(new Promise((res,rjc)=>{
+                        this.model.getFireBaseRef(folder.nameFolder).on('value',snapshot=>{
+                        if(snapshot.val()){
+                            snapshot.forEach(item=>{
+                                promisesTwo.push(new Promise((r,rj)=>{
+                                    this.model.deleteFirebase(folder.nameFolder,item.key)
+                                    .then(msg=>{
+                                        r(msg)
+                                    })
+                                    .catch(err=>rj(err))
+                                }))
+                            })
+                            Promise.all(promisesTwo)
+                            .then(fold=>{
+                                res(fold)
+                            })
+                            .catch(errr=>{
+                                rjc(errr)
+                            })
+                            
+                        }else{res({ok:"pasta vazia"})}
+                            
+                        })
+                    }))
+                })
+                Promise.all(promises)
+                .then(res=>{
+                    vetor.forEach(f=>{
+                        this.model.deleteFirebase("folders",f.key)
+                        .then(resf=>{
+                            resolve(resf)
+                        })
+                        .catch(errf=>reject(errf))
+                    })
+                })
+                .catch(err=>reject(err))
+            }
+            else{
+                reject({info:"Nenhuma pasta foi selecionada e mesmo assim essa solicitação de deletar chegou até aqui"})
+            }
         })
     }
-    deleteFolders(){
+    searchDel(){
+        let checkedd=false
+        let data=[];
+        $(".checkbox").forEach(cs=>{
+            if(cs.checked){
+                checkedd=true
+                data.push(JSON.parse(cs.parentNode.dataset.key))
+            }
+         })
+         return checkedd?data:checkedd;
+    }
+  async  deleteFolders(){
+        let res = await this.deleteFolder(this.searchDel());//Aqui passa a todas as pastas que foram selecionadas
+        return res;
 
     }
     editFolder(){
@@ -239,6 +299,7 @@ class Controller{
                     this.update("folders",data,data.key)
                     cs.parentNode.dataset.key=JSON.stringify(data)
                     cs.parentNode.$('span')[0].innerHTML=name
+                    $("#menu-folders").classList.remove("show")
                 }
              })
         }
@@ -246,7 +307,11 @@ class Controller{
     counterCheckbox(){
         let counter=0
         $(".checkbox").forEach(cs=>{
-           cs.checked?counter++:0
+           if(cs.checked){
+            cs.parentNode.$("input")[1].disabled=true
+               counter++
+            }
+            else cs.parentNode.$("input")[1].disabled=false
         })
         return counter;
     }

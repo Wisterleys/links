@@ -90,7 +90,7 @@ class Controller{
         let lii = this.createTags({place:ul,tag:"li",class:"menuEdit"})
         this.createTags({
             place:lii,tag:"input",class:"btnEditFolder",alt:"edite",type:"image",src:"img/edit-small.png"
-        })
+        }).on("click",e=>{this.editFolder()})
         lii=this.createTags({place:ul,tag:"li",class:"menuEdit"})
         this.createTags({
             place:lii,tag:"input",class:"btnDelFolder",alt:"delete",type:"image",src:"img/delete.png"
@@ -218,6 +218,20 @@ class Controller{
                 btn.focus()
             })
         });
+    }
+    editFolder(){
+        let name = prompt("Edita nome da pasta");
+        if(name){
+            $(".checkbox").forEach(cs=>{
+                if(cs.checked){
+                    let data = JSON.parse(cs.parentNode.dataset.key)
+                    data.alias=name
+                    this.update("folders",data,data.key)
+                    cs.parentNode.dataset.key=JSON.stringify(data)
+                    cs.parentNode.$('span')[0].innerHTML=name
+                }
+             })
+        }
     }
     counterCheckbox(){
         let counter=0

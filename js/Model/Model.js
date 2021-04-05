@@ -5,7 +5,7 @@ class Model{
     updateFirebase(nameFolder,msg,key){//Método que sabe realizar atualação no DB
         let json={}
         if(msg){
-         json.msg=msg
+         typeof msg == "object"?json=Object.assign(json,msg):json.msg=msg
          this.getFireBaseRef(nameFolder).child(key).set(json)
         }
      }

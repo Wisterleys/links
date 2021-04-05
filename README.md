@@ -1,4 +1,4 @@
 # list_of_projects
 
-![Alt Text](exemp.gif)
+![Alt Text](V2.gif)
 

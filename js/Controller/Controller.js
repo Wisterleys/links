@@ -58,7 +58,6 @@ class Controller{
             $("#ul-folder").innerHTML=""
             this.realTime("folders","#ul-folder")
             this.folder[2]=false
-            $(".checkbox").forEach(e=>e.hidden=false)
         })
     }
     listenToAllFolders(){
@@ -220,6 +219,13 @@ class Controller{
             })
         });
     }
+    counterCheckbox(){
+        let counter=0
+        $(".checkbox").forEach(cs=>{
+           cs.checked?counter++:0
+        })
+        return counter;
+    }
     realTime(folder=false,imp){//Impressão das informações do DB para tela em tempo real
         if(this.folder[2]){
             this.model.getFireBaseRef(folder?folder:"list").on("value",snapshot=>{
@@ -237,6 +243,13 @@ class Controller{
                     }
                 }
                 !folder?$("#back").hidden=false:0
+                if(folder=="folders"){
+                    $(".checkbox").forEach(cs=>{
+                        cs.on("click",c=>{
+                            console.log(this.counterCheckbox());
+                        })
+                    })
+                }
                 this.listenToAllFolders()
                 this.listener()
             })

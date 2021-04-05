@@ -2,15 +2,15 @@ class Model{
     constructor(){
         this.connect();
     }
-    updateFirebase(msg,key){//Método que sabe realizar atualação no DB
+    updateFirebase(nameFolder,msg,key){//Método que sabe realizar atualação no DB
         let json={}
         if(msg){
          json.msg=msg
-         this.getFireBaseRef().child(key).set(json)
+         this.getFireBaseRef(nameFolder).child(key).set(json)
         }
      }
-    deleteFirebase(key){//Método que sabe excluir
-        this.getFireBaseRef().child(key).remove()
+    deleteFirebase(nameFolder,key){//Método que sabe excluir
+        this.getFireBaseRef(nameFolder).child(key).remove()
     }
     getFireBaseRef(reff="list"){
         return firebase.database().ref(reff)

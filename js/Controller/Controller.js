@@ -5,6 +5,7 @@ class Controller{
         this._currentFolder;
         this._dataset={key:"",el:""}
         this._height;
+        this._currentNameFolder;
         this.initial()
         this.onImp()
         this.onBtnDelete()
@@ -46,15 +47,16 @@ class Controller{
     }
     listenBtnBack(){
         $("#back").on("click",e=>{
-            //this.reloadPage()
             $('.ulsImp')[0].innerHTML=""
             $("#back").hidden=true
             $(".btnAdd")[0].hidden=true
             $("#createFolder").hidden=false
-            this.folder[2]=false
+            this.folder[2]=true
             this.currentFolder.src=this.folder[0]
             this.currentFolder.disabled=false
-            this.AllShow(".folders")
+            $("#ul-folder").innerHTML=""
+            this.realTime("folders","#ul-folder")
+            this.folder[2]=false
         })
     }
     listenToAllFolders(){
@@ -63,19 +65,22 @@ class Controller{
                 this.currentFolder=f.target
                 f.target.disabled=true
                 f.target.src=this.folder[1]
-                this.AllHidde(".folders",i)
+                let li = f.target.parentNode.cloneNode(true)
+                $("#ul-folder").innerHTML=""
+                $("#ul-folder").appendChild(li)
                 this.folder[2]=true
-                let data = f.target.parentNode
-                console.log(data.dataset.key)
-                //this.realTime("list",".ulsImp")//Aqui passa o nome da pasta que será lida lá no firebase
+                let data = JSON.parse(f.target.parentNode.dataset.key)
+                this.currentNameFolder=data.nameFolder
+                this.realTime(data.nameFolder,".ulsImp")//Aqui passa o nome da pasta que será lida lá no firebase
                 $(".btnAdd")[0].hidden=false
                 $("#createFolder").hidden=true
+                $("#back").hidden=false
             })
         })
     }
     onImp(){//Escuta para criar novo campo na lista
         $(".btnAdd")[0].on("click",e=>{
-            this.create()
+            this.create(this.currentNameFolder)
         })
     }
     impFolder(dataset=false){
@@ -108,8 +113,8 @@ class Controller{
             this.model.createFirebase("folders",{nameFolder:name.replace(/[\ ]/ig,"-"),alias:name})
         }
     }
-    create(){//Método que usa o objeto Model para salvar dados no DB
-        this.model.createFirebase({msg:"Digite o nome do projeto..."})
+    create(nameFolder){//Método que usa o objeto Model para salvar dados no DB
+        this.model.createFirebase(nameFolder,{msg:"Digite o nome do projeto..."})
     }
     imp(value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
         let li = this.createTags({place:$('.ulsImp')[0],tag:"li",class:"lisImp"})
@@ -125,8 +130,8 @@ class Controller{
         })
         this.createTags({place:li,tag:"p",insertTag:value?value:"Digite o nome do projeto..."})
     }
-    update(msg,id){
-        this.model.updateFirebase(msg,id)
+    update(nameFolder,msg,id){
+        this.model.updateFirebase(nameFolder,msg,id)
     }
     save(key){//Criando mensagem de aviso informando que atualização foi feita com sucesso
         let e=false;
@@ -149,7 +154,7 @@ class Controller{
     }
     onBtnDelete(){
         $("#exc").on("click",e=>{
-            this.model.deleteFirebase(this.dataset.key)
+            this.model.deleteFirebase(this.currentNameFolder,this.dataset.key)
             this.dataset.el.remove()
             $("#x").click()
         })
@@ -185,7 +190,7 @@ class Controller{
         $("p").forEach(el=> {
             el.on("blur",e=>{
                 e.target.contentEditable=false
-                this.update(e.target.innerHTML,e.target.parentNode.dataset.key)
+                this.update(this.currentNameFolder,e.target.innerHTML,e.target.parentNode.dataset.key)
                 this.save(e.target.parentNode.dataset.key)
             })
         });
@@ -248,6 +253,8 @@ class Controller{
         return tag
     }
     //GETs e SETs
+    get currentNameFolder(){return this._currentNameFolder}
+    set currentNameFolder(value){this._currentNameFolder=value}
     get currentFolder(){return this._currentFolder}
     set currentFolder(value){this._currentFolder=value}
     get folder(){return this._folder}

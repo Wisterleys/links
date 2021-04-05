@@ -21,9 +21,12 @@ p{
     }
 }
 .ulsImp{
+    list-style: none;
+    padding: 0px;
     width: 90%;
 }
 .lisImp{
+    padding: 5px;
     border-style: outset;
     margin-bottom: 70px;
     width: 100%;

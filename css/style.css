@@ -7,6 +7,9 @@ main header{
     margin: 0px;
     width: 100%;
 }
+p{
+    padding: 5px;
+}
 .ulsImp{
     width: 90%;
 }

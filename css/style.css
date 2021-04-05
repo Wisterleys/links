@@ -11,6 +11,7 @@ main header{
     width: 90%;
 }
 .lisImp{
+    border-style: outset;
     margin-bottom: 70px;
     width: 100%;
 }

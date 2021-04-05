@@ -7,6 +7,9 @@ main header{
     margin: 0px;
     width: 100%;
 }
+img{
+    max-width:90%;
+}
 p{  
     padding: 5px;
 }

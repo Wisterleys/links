@@ -246,7 +246,10 @@ class Controller{
                 if(folder=="folders"){
                     $(".checkbox").forEach(cs=>{
                         cs.on("click",c=>{
-                            console.log(this.counterCheckbox());
+                            let ch = $("#menu-folders");
+                            
+                            this.counterCheckbox()>1?ch.$("li")[0].hidden=true:ch.$("li")[0].hidden=false
+                            this.counterCheckbox()>0?ch.classList.add("show"):ch.classList.remove("show")
                         })
                     })
                 }

@@ -12,6 +12,7 @@ class Controller{
         this.onBtnX()
         this.listenBtnBack()
         this.listenBtnCreateFolder()
+        this.menuFolders($("#menu-folders"))
         this.height=window.innerHeight
         this.folder[2]=true
         this.realTime("folders","#ul-folder")
@@ -85,6 +86,17 @@ class Controller{
             this.create(this.currentNameFolder)
         })
     }
+    menuFolders(place){
+        let ul = this.createTags({place:place,tag:"ul",class:"menu"})
+        let lii = this.createTags({place:ul,tag:"li",class:"menuEdit"})
+        this.createTags({
+            place:lii,tag:"input",class:"btnEditFolder",alt:"edite",type:"image",src:"img/edit-small.png"
+        })
+        lii=this.createTags({place:ul,tag:"li",class:"menuEdit"})
+        this.createTags({
+            place:lii,tag:"input",class:"btnDelFolder",alt:"delete",type:"image",src:"img/delete.png"
+        })
+    }
     impFolder(dataset=false){
         let li = this.createTags({
             place:$("#ul-folder"),
@@ -94,6 +106,7 @@ class Controller{
         })
         dataset?li.dataset.key=dataset:0
         dataset = JSON.parse(dataset)
+        
         this.createTags({
          place:li,
          tag:"input",
@@ -109,6 +122,7 @@ class Controller{
              tag:"span",
              insertTag:dataset.alias
              })
+        
     }
     createFolder(){//Método que usa o objeto Model para salvar pastas no DB
         let name = prompt("Qual name?")

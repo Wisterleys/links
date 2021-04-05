@@ -96,9 +96,12 @@ class Controller{
         this.createTags({
             place:lii,tag:"input",class:"btnDelFolder",alt:"delete",type:"image",src:"img/delete.png"
         }).on("click",e=>{
-            this.deleteFolders()
-            .then(res=>this.reloadPage())
-            .catch(err=>console.log(err))
+            let resul = confirm("Deseja mesmo Excluir tudo que está selecionado?")
+            if(resul){
+                this.deleteFolders()
+                .then(res=>this.reloadPage())
+                .catch(err=>console.log(err))
+            }
             
         })
     }

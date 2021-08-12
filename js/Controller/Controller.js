@@ -153,7 +153,15 @@ class Controller{
         this.createTags({
             place:lii,tag:"input",class:"btnDel",alt:"delete",type:"image",src:"img/delete.png"
         })
-        this.createTags({place:li,tag:"p",insertTag:value?value:"Digite o nome do projeto..."})
+        this.createTags({place:li,tag:"p",insertTag:value?this.tag(value):"Digite o nome do projeto..."})
+    }
+    tag(msg){
+        // grupo de captura ([<][a][>])
+        // teste para pegar o intervalo [<][a-z][>]([\w+\d+\:\//\.\?\=\∓\n])*?[<][/][a-z][>]
+        
+        //msg = msg.search("<a>")>-1&&msg.search("</a>")>-1?msg.replace(/[\<][a][\>]/ig,"$a->"):msg
+        console.dir(msg)
+        return `<a href="${String(msg).replace('<','')}">link</a>`;
     }
     update(nameFolder,msg,id){
         this.model.updateFirebase(nameFolder,msg,id)

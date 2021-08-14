@@ -156,12 +156,16 @@ class Controller{
         this.createTags({place:li,tag:"p",insertTag:value?this.tag(value):"Digite o nome do projeto..."})
     }
     tag(msg){
-        let teste = msg.replace(/[\[]([\w]+)[\]][{](.*)[}]/g,"$1,$2").split(",")
-    
-        return teste.length>1?teste[0]=="a"?`<${teste[0]} href="${teste[1]}">${teste[1].replace(/(http[s]?[:][/]{2}.*[.][c][o][m][.]?[b]?[r]?)/,"$1...")}</${teste[0]}>`:`<${teste[0]}>${teste[1]}</${teste[0]}>`:msg
+        let teste = msg.replace(/[\[]([\w]+)[\]][{](.*)[}]/,"$1,$2").split(",")//PEGO O NOME DA TAG E O CONTEUDO [<TAGNAME>]{CONTEUDO}
+        let name;
+        teste.length>1?teste[1].replace(/(http[s]?[:][/]{2}.*[.][c]?[o]?[m]?[.]?[b]?[r]?)/,e=>{// Pega só o que precisa e armazena na variavel name
+            name = e+"..."
+            return e;
+        }):0
+        return teste.length>1?teste[0]=="a"?`<${teste[0]} target="_blank" href="${teste[1]}">${name?name:"Link..."}</${teste[0]}>`:`<${teste[0]}>${teste[1]}</${teste[0]}>`:msg
     }
-    update(nameFolder,msg,id){
-        this.model.updateFirebase(nameFolder,msg,id)
+    update(folder_name,msg,id){
+        this.model.updateFirebase(folder_name,msg,id)
     }
     save(key){//Criando mensagem de aviso informando que atualização foi feita com sucesso
         let e=false;

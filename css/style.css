@@ -4,12 +4,13 @@ body{
 main{
     margin:auto;
     padding:0px;
-    width: 85%;
+    width: 100%;
 }
 main header{
     margin: 0px;
     width: 100%;
 }
+nav{width: 100%;}
 img{
     max-width:90%;
 }
@@ -135,7 +136,15 @@ p{
     float: left;
     margin-bottom: 50px;
 }
-#ul-folder{list-style: none; clear: both;}
+#ul-folder{
+    list-style: none; clear: both;
+    padding: 0px;
+    width: 99%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
+    grid-template-rows: 1fr;
+    grid-gap: 20px;
+}
 #menu-folders{
     position: fixed;
     top:30px;
@@ -148,10 +157,8 @@ p{
     visibility: visible;
 }
 .folders{
-    width: 100px;
-    margin: 10px;
+    width: 85px;
     padding: 0px;
-    display: inline-block;
     visibility: visible;
 }
 .folders input{

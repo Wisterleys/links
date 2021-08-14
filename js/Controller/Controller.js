@@ -156,12 +156,9 @@ class Controller{
         this.createTags({place:li,tag:"p",insertTag:value?this.tag(value):"Digite o nome do projeto..."})
     }
     tag(msg){
-        // grupo de captura ([<][a][>])
-        // teste para pegar o intervalo [<][a-z][>]([\w+\d+\:\//\.\?\=\∓\n])*?[<][/][a-z][>]
-        
-        //msg = msg.search("<a>")>-1&&msg.search("</a>")>-1?msg.replace(/[\<][a][\>]/ig,"$a->"):msg
-        console.dir(msg)
-        return `<a href="${String(msg).replace('<','')}">link</a>`;
+        let teste = msg.replace(/[\[]([\w]+)[\]][\{]([\w\d\s\.]*)[\}]/g,"$1,$2").split(",")
+    
+        return teste.length>1?teste[0]=="a"?`<${teste[0]} href="${teste[1]}">LINK</${teste[0]}>`:`<${teste[0]}>${teste[1]}</${teste[0]}>`:msg
     }
     update(nameFolder,msg,id){
         this.model.updateFirebase(nameFolder,msg,id)

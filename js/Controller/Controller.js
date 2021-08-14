@@ -156,13 +156,31 @@ class Controller{
         this.createTags({place:li,tag:"p",insertTag:value?this.tag(value):"Digite o nome do projeto..."})
     }
     tag(msg){
-        let teste = msg.replace(/[\[]([\w]+)[\]][{](.*)[}]/,"$1,$2").split(",")//PEGO O NOME DA TAG E O CONTEUDO [<TAGNAME>]{CONTEUDO}
-        let name;
-        teste.length>1?teste[1].replace(/(http[s]?[:][/]{2}.*[.][c]?[o]?[m]?[.]?[b]?[r]?)/,e=>{// Pega só o que precisa e armazena na variavel name
-            name = e+"..."
-            return e;
-        }):0
-        return teste.length>1?teste[0]=="a"?`<${teste[0]} target="_blank" href="${teste[1]}">${name?name:"Link..."}</${teste[0]}>`:`<${teste[0]}>${teste[1]}</${teste[0]}>`:msg
+        let teste = msg.replace(/[\[]([\w]+)[\]][{](.*)[}]/,e=>{
+            let es = e.replace(/[\[]([\w]+)[\]][{](.*)[}]/,"$1,$2").split(',')
+            let name; 
+            es.length>1?es[1].replace(/(http[s]?[:][/]{2}.*[.][c]?[o]?[m]?[.]?[b]?[r]?)/,c=>{// Pega só o que precisa e armazena na variavel name
+                name = c+"..."
+                return c;
+            }):0
+            if(es.length>1){
+                switch(es[0]){
+                    case"a":
+                    es=`<${es[0]} target="_blank" href="${es[1]}">${name?name:"Link..."}</${es[0]}>`
+                    break;
+                    case"img":
+                    es=`<${es[0]} src="${es[1]}" width="100%">`
+                    break;
+                    default:
+                        es=`${es[0]} ${es[1]}`
+                }
+            }else{
+                es=e
+            }
+            return es;
+        })//PEGO O NOME DA TAG E O CONTEUDO [<TAGNAME>]{CONTEUDO}
+        return teste;
+       
     }
     update(folder_name,msg,id){
         this.model.updateFirebase(folder_name,msg,id)

@@ -134,6 +134,7 @@ p{
     float: right;
     margin-bottom: 50px;
 }
+
 #back{
     float: left;
     margin-bottom: 50px;
@@ -146,6 +147,12 @@ p{
     grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
     grid-template-rows: 1fr;
     grid-gap: 20px;
+}
+#legendas{
+    padding: 0px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
 }
 #menu-folders{
     position: fixed;

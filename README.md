@@ -3,10 +3,12 @@
 ![Alt Text](V2.gif)
 
 ## Adicionar TAGs
-| Adicionar imgagem | Adicionar link |
-| ................. | .............. |
-| [img]{url da imagem} | [a]{url do link} |
- 
+~~~Adicionar imgagem
+[img]{url da imagem}
+~~~
+~~~Adicionar link
+[a]{url do link}
+
 
 
                      

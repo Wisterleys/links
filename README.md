@@ -2,9 +2,10 @@
 
 ![Alt Text](V2.gif)
 
-## Adicionar imgagem:
-### [img]{url da imagem}
+## Adicionar TAGS
+| Adicionar imgagem | Adicionar link |
+| [img]{url da imagem} | [a]{url do link} |
+ 
 
-## Adicionar link:
-### [a]{url do link}
+
                      

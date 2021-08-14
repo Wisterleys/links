@@ -156,7 +156,7 @@ class Controller{
         this.createTags({place:li,tag:"p",insertTag:value?this.tag(value):"Digite o nome do projeto..."})
     }
     tag(msg){
-        let teste = msg.replace(/[\[]([\w]+)[\]][{](.*)[}]/,e=>{
+        let tag = msg.replace(/[\[]([\w]+)[\]][{](.*)[}]/,e=>{
             let es = e.replace(/[\[]([\w]+)[\]][{](.*)[}]/,"$1,$2").split(',')
             let name; 
             es.length>1?es[1].replace(/(http[s]?[:][/]{2}.*[.][c]?[o]?[m]?[.]?[b]?[r]?)/,c=>{// Pega só o que precisa e armazena na variavel name
@@ -179,7 +179,7 @@ class Controller{
             }
             return es;
         })//PEGO O NOME DA TAG E O CONTEUDO [<TAGNAME>]{CONTEUDO}
-        return teste;
+        return tag;
        
     }
     update(folder_name,msg,id){

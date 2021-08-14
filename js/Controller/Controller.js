@@ -155,6 +155,16 @@ class Controller{
         })
         this.createTags({place:li,tag:"p",insertTag:value?this.tag(value):"Digite o nome do projeto..."})
     }
+    tamplateCode(value){
+       let tag= `
+        <pre style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; padding: 9.5px; border: 1px solid rgb(204, 204, 204); font-variant-numeric: inherit; font-variant-east-asian: inherit; font-stretch: inherit; font-size: 13px; line-height: 1.42857; font-family: Menlo, Monaco, Consolas, &quot;Courier New&quot;, monospace; vertical-align: baseline; overflow: auto; color: rgb(51, 51, 51); word-break: break-all; overflow-wrap: break-word; background-color: rgb(245, 245, 245); border-radius: 4px;">
+        <span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline;">
+        ${value}
+        </span>
+        </pre>
+        `
+        return tag;
+    }
     tag(msg){
         let tag = msg.replace(/[\[]([\w]+)[\]][{](.*)[}]/,e=>{
             let es = e.replace(/[\[]([\w]+)[\]][{](.*)[}]/,"$1,$2").split(',')
@@ -170,6 +180,9 @@ class Controller{
                     break;
                     case"img":
                     es=`<${es[0]} src="${es[1]}" width="100%">`
+                    break;
+                    case"code":
+                    es=this.tamplateCode(es[1])
                     break;
                     default:
                         es=`${es[0]} ${es[1]}`

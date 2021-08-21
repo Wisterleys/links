@@ -184,6 +184,11 @@ class Controller{
                     case"code":
                     es=this.tamplateCode(es[1])
                     break;
+                    case"youtube":
+                    let code = es[1].split("=")[1]
+                    
+                    es=`<iframe width="460" height="215" src="https://www.youtube.com/embed/${code}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+                    break;
                     default:
                         es=`${es[0]} ${es[1]}`
                 }

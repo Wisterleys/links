@@ -9,6 +9,9 @@ class Model{
          this.getFireBaseRef(nameFolder).child(key).set(json)
         }
      }
+     returnsPercent(value,total){
+        return value*100/total
+    }
     deleteFirebase(nameFolder,key){//Método que sabe excluir
         return this.getFireBaseRef(nameFolder).child(key).remove()
     }

@@ -141,6 +141,19 @@ class Controller{
     create(nameFolder){//Método que usa o objeto Model para salvar dados no DB
         this.model.createFirebase(nameFolder,{msg:"Digite o nome do projeto..."})
     }
+    headerLiTamplete(){
+        this.createTags({place:li,tag:"div",class:'row',insertTag:`<div class="card">
+        <div class="card-header">
+          <h5 class="card-title m-0">Featured</h5>
+        </div>
+        <div class="card-body">
+          <h6 class="card-title">Special title treatment</h6>
+
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>`})
+    }
     imp(value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
         let li = this.createTags({place:$('.ulsImp')[0],tag:"li",class:"lisImp"})
         dataset?li.dataset.key=dataset:0

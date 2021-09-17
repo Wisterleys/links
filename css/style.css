@@ -142,12 +142,13 @@ p{
 #ul-folder{
     list-style: none; clear: both;
     padding: 0px;
-    width: 99%;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
     grid-template-rows: 1fr;
     grid-gap: 20px;
 }
+
 #legendas{
     padding: 0px;
     list-style: none;

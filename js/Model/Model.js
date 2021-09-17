@@ -1,5 +1,6 @@
-class Model{
+class Model extends Storage{
     constructor(){
+        super()
         this.connect();
     }
     updateFirebase(nameFolder,msg,key){//Método que sabe realizar atualação no DB

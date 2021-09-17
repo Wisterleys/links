@@ -6,7 +6,6 @@ class Storage{
         return new Promise((resolve,reject)=>{
             firebase.storage().ref("/files").child(json.nameFile).delete()
             .then(res=>{
-            this.deleteFirebase(json.key)
                 resolve({res,key:json.key})
             })
             .catch(erro=>{reject([erro,json])})

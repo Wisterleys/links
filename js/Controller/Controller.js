@@ -156,10 +156,20 @@ class Controller{
                 </div>
             </div>
         */
-        let row = el.addEl({tag:"div",class:'row'})
-            let card = row.addEl({tag:"div",class:'card col-12'})
-                let header = card.addEl({tag:'div',class:'card-header'})
-                    let h5 = header.addEl({tag:'h5', class:'card-title m-0',insertTag:'Featured'})
+        let row =  $('.ulsImp')[0].addEl({tag:"li",class:'row col-12'})
+            let card = row.addEl({tag:"div",class:'card col-12 lisImp'})
+                let header = card.addEl({tag:'div',class:'card-headers row'})
+                    let h5 = header.addEl({tag:'h5', class:'card-title m-0 col-6',insertTag:'Featured'})
+                    let ul = header.addEl({tag:"ul",class:"menu col-6"})
+                    let lii = ul.addEl({tag:"li",class:"menuEdit"})
+                    lii.addEl({
+                    tag:"input",class:"btnEdit",alt:"edite",type:"image",src:"img/edit-small.png"
+                    })
+                    lii=ul.addEl({tag:"li",class:"menuEdit"})
+                    lii.addEl({
+                        tag:"input",class:"btnDel",alt:"delete",type:"image",src:"img/delete.png"
+                    })
+                    
                 let card_body = card.addEl({tag:'div',class:'card-body'})
                 card_body.dataset.key=dataset
                     let h6 = card_body.addEl({tag:'h6',class:'card-title',insertTag:'Special title treatment'})
@@ -167,17 +177,8 @@ class Controller{
                     let a = card_body.addEl({tag:'a',class:'btn btn-primary',href:'#',insertTag:'Go somewhere'})
     }
     imp(value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
-        let li = $('.ulsImp')[0].addEl({tag:"li",class:"lisImp col-12"})
-        let ul = li.addEl({tag:"ul",class:"menu"})
-        let lii = ul.addEl({tag:"li",class:"menuEdit"})
-        lii.addEl({
-          tag:"input",class:"btnEdit",alt:"edite",type:"image",src:"img/edit-small.png"
-        })
-        lii=ul.addEl({tag:"li",class:"menuEdit"})
-        lii.addEl({
-            tag:"input",class:"btnDel",alt:"delete",type:"image",src:"img/delete.png"
-        })
-        this.bodyLiTamplete(li,value,dataset?li.dataset.key=dataset:0)
+       
+        this.bodyLiTamplete("oi",value,dataset?dataset:0)
     }
     tamplateCode(value){
        let tag= `

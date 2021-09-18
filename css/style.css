@@ -199,3 +199,7 @@ img{
 .folders.hidden{
     visibility: hidden;
 }
+.btn-save{visibility: visible;}
+.btn-save.hidde{
+    visibility: hidden;
+}

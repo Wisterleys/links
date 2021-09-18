@@ -142,7 +142,7 @@ class Controller{
         this.model.createFirebase(nameFolder,{msg:"Digite o nome do projeto..."})
     }
     //LIs dentro das pastas
-    bodyLiTamplete(value_p,dataset){
+    bodyLiTamplete(title=false,value_p=false,dataset){
         /*
             <div class="card">
                 <div class="card-header">
@@ -172,13 +172,14 @@ class Controller{
                     
                 let card_body = card.addEl({tag:'div',class:'card-body'})
                 card_body.dataset.key=dataset
-                    let h6 = card_body.addEl({tag:'h6',class:'card-title',insertTag:'Special title treatment'})
-                    let p = card_body.addEl({tag:'p',class:'card-text',insertTag:value_p?this.tag(value_p):'Special title treatment'})
-                    let a = card_body.addEl({tag:'a',class:'btn btn-primary',href:'#',insertTag:'Go somewhere'})
+                    card_body.addEl({tag:'h6',class:'card-title ps',insertTag:title?title:'Special title treatment'})
+                    card_body.addEl({tag:'p',class:'card-text ps',insertTag:value_p?this.tag(value_p):'Special title treatment'})
+                    card_body.addEl({tag:'a',class:'btn btn-primary',href:'#',insertTag:'Go somewhere'})
+                    card_body.addEl({tag:'input',type:'button',class:'btn btn-primary btn-save hidde',value:'Salvar'})
     }
-    imp(value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
+    imp(title=false,value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
        
-        this.bodyLiTamplete(value,dataset?dataset:0)
+        this.bodyLiTamplete(title,value,dataset?dataset:0)
     }
     tamplateCode(value){
        let tag= `
@@ -280,11 +281,16 @@ class Controller{
             })
         });
     }
-    blurP(){//Escuta todos os P que tem no DOM e ativado quando perde o foco
-        $("p").forEach(el=> {
-            el.on("blur",e=>{
-                e.target.contentEditable=false
-                this.update(this.currentNameFolder,e.target.innerHTML,e.target.parentNode.dataset.key)
+    blurP(){//Escuta todos os P que tem no DOM e ativado quando clica no botão salvar
+        $(".btn-save").forEach(el=> {
+            el.on("click",e=>{
+                $(".ps").forEach(p=>p.contentEditable=false)
+                this.update(this.currentNameFolder,
+                    {
+                        title:e.target.parentNode.$("h6")[0].innerHTML,
+                        msg:e.target.parentNode.$("p")[0].innerHTML
+                    },
+                    e.target.parentNode.dataset.key)
                 this.save(e.target.parentNode.dataset.key)
             })
         });
@@ -292,9 +298,14 @@ class Controller{
     onP(){//Escuta todos os P que tem no DOM e ativado com o click
         $(".btnEdit").forEach(el=> {
             el.on("click",e=>{
-                let btn = e.target.parentNode.parentNode.parentNode.parentNode.$("p")[0]
-                btn.contentEditable=true
-                btn.focus()
+                let ps = e.target.parentNode.parentNode.parentNode.parentNode.$(".ps")
+                let hiddes = e.target.parentNode.parentNode.parentNode.parentNode.$(".hidde")
+                ps.forEach(p=>{
+                    p.contentEditable=true
+                    p.style.border="1px solid green"
+                    p.focus()
+                })
+                hiddes.forEach(hidde=>hidde.toggle('hidde'))
             })
         });
     }
@@ -400,7 +411,8 @@ class Controller{
                         })
                     }else{
                         snapshot.forEach(snapshotItem=>{
-                            this.imp(snapshotItem.val().msg,snapshotItem.key)
+                            let title = snapshotItem.val().title?snapshotItem.val().title:false
+                            this.imp(title,snapshotItem.val().msg,snapshotItem.key)
                         })
                     }
                 }

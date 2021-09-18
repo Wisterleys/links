@@ -13,7 +13,7 @@ Element.prototype.on=function(events,func){
     });
 }
 Element.prototype.$=function(e){return e.search("#")>-1?this.querySelector(e):this.querySelectorAll(e)}
-Element.prototype.toggle=function(){this.classList.toggle("close")}
+Element.prototype.toggle=function(name){this.classList.toggle(name)}
 Element.prototype.addEl=function(obj){
     /*
     exemplo

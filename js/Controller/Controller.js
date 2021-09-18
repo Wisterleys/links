@@ -141,32 +141,43 @@ class Controller{
     create(nameFolder){//Método que usa o objeto Model para salvar dados no DB
         this.model.createFirebase(nameFolder,{msg:"Digite o nome do projeto..."})
     }
-    headerLiTamplete(){
-        this.createTags({place:li,tag:"div",class:'row',insertTag:`<div class="card">
-        <div class="card-header">
-          <h5 class="card-title m-0">Featured</h5>
-        </div>
-        <div class="card-body">
-          <h6 class="card-title">Special title treatment</h6>
+    //LIs dentro das pastas
+    bodyLiTamplete(el,value_p){
+        /*
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title m-0">Featured</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title">Special title treatment</h6>
 
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>`})
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        */
+        let row = el.addEl({tag:"div",class:'row'})
+            let card = row.addEl({tag:"div",class:'card col-12'})
+                let header = card.addEl({tag:'div',class:'card-header'})
+                    let h5 = header.addEl({tag:'h5', class:'card-title m-0',insertTag:'Featured'})
+                let card_body = card.addEl({tag:'div',class:'card-body'})
+                    let h6 = card_body.addEl({tag:'h6',class:'card-title',insertTag:'Special title treatment'})
+                    let p = card_body.addEl({tag:'p',class:'card-text',insertTag:value_p?this.tag(value_p):'Special title treatment'})
+                    let a = card_body.addEl({tag:'a',class:'btn btn-primary',href:'#',insertTag:'Go somewhere'})
     }
     imp(value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
-        let li = this.createTags({place:$('.ulsImp')[0],tag:"li",class:"lisImp"})
+        let li = $('.ulsImp')[0].addEl({tag:"li",class:"lisImp col-12"})
         dataset?li.dataset.key=dataset:0
-        let ul = this.createTags({place:li,tag:"ul",class:"menu"})
-        let lii = this.createTags({place:ul,tag:"li",class:"menuEdit"})
-        this.createTags({
-            place:lii,tag:"input",class:"btnEdit",alt:"edite",type:"image",src:"img/edit-small.png"
+        let ul = li.addEl({tag:"ul",class:"menu"})
+        let lii = ul.addEl({tag:"li",class:"menuEdit"})
+        lii.addEl({
+          tag:"input",class:"btnEdit",alt:"edite",type:"image",src:"img/edit-small.png"
         })
-        lii=this.createTags({place:ul,tag:"li",class:"menuEdit"})
-        this.createTags({
-            place:lii,tag:"input",class:"btnDel",alt:"delete",type:"image",src:"img/delete.png"
+        lii=ul.addEl({tag:"li",class:"menuEdit"})
+        lii.addEl({
+            tag:"input",class:"btnDel",alt:"delete",type:"image",src:"img/delete.png"
         })
-        this.createTags({place:li,tag:"p",insertTag:value?this.tag(value):"Digite o nome do projeto..."})
+        this.bodyLiTamplete(li,value)
     }
     tamplateCode(value){
        let tag= `

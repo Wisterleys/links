@@ -178,6 +178,7 @@ class Controller{
                     card_body.addEl({tag:'p',class:'card-text ps',insertTag:value_p?this.tag(value_p):'Mensagem...'})
                     card_body.addEl({tag:'a',class:'btn btn-primary v',href:'#',insertTag:'Add anexo'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-primary btn-save hidde',value:'Salvar'})
+                    card_body.addEl({tag:'input',type:'file',class:'hidde'})
     }
     imp(title=false,value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
        

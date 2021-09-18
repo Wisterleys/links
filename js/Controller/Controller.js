@@ -159,7 +159,9 @@ class Controller{
         let row =  $('.ulsImp')[0].addEl({tag:"li",class:'row col-12'})
             let card = row.addEl({tag:"div",class:'card col-12 lisImp'})
                 let header = card.addEl({tag:'div',class:'card-headers row'})
-                    let h5 = header.addEl({tag:'h5', class:'card-title m-0 col-6',insertTag:'Featured'})
+                    let h5 = header.addEl({tag:'h5', class:'card-title m-0 col-6'})
+                        h5.addEl({tag:'img',src:this.folder[1],style:'width:40px;margin-right:5px;'})
+                        h5.addEl({tag:'lable',insertTag:this.currentNameFolder})
                     let ul = header.addEl({tag:"ul",class:"menu col-6"})
                     let lii = ul.addEl({tag:"li",class:"menuEdit"})
                     lii.addEl({
@@ -174,7 +176,7 @@ class Controller{
                 card_body.dataset.key=dataset
                     card_body.addEl({tag:'h6',class:'card-title ps',insertTag:title?title:'Special title treatment'})
                     card_body.addEl({tag:'p',class:'card-text ps',insertTag:value_p?this.tag(value_p):'Special title treatment'})
-                    card_body.addEl({tag:'a',class:'btn btn-primary',href:'#',insertTag:'Go somewhere'})
+                    card_body.addEl({tag:'a',class:'btn btn-primary v',href:'#',insertTag:'Go somewhere'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-primary btn-save hidde',value:'Salvar'})
     }
     imp(title=false,value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
@@ -258,11 +260,13 @@ class Controller{
     onDelete(){//Escuta para o modal deletar
         $(".btnDel").forEach(el=> {
             el.on("click",e=>{
-                this.dataset.key=e.target.parentNode.parentNode.parentNode.dataset.key
-                this.dataset.el=e.target.parentNode.parentNode.parentNode
-                let el = e.target.parentNode.parentNode.parentNode.$("p")[0].cloneNode(true)
+                this.dataset.key=e.target.parentNode.parentNode.parentNode.parentNode.$(".card-body")[0].dataset.key
+                this.dataset.el=e.target.parentNode.parentNode.parentNode.parentNode.$(".card-body")[0]
+                let el = e.target.parentNode.parentNode.parentNode.parentNode.$(".card-body")[0].cloneNode(true)
+             
                 $("#sw").innerHTML=""
                 $("#sw").appendChild(el)
+                $("#sw").$(".v")[0].remove()
                 if($("#warning").offsetHeight>this.height){
                     console.log($("#warning").offsetHeight>this.height)
                     $("#warning").style.position="absolute"

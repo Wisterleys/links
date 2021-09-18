@@ -142,7 +142,7 @@ class Controller{
         this.model.createFirebase(nameFolder,{msg:"Digite o nome do projeto..."})
     }
     //LIs dentro das pastas
-    bodyLiTamplete(el,value_p,dataset){
+    bodyLiTamplete(value_p,dataset){
         /*
             <div class="card">
                 <div class="card-header">
@@ -178,7 +178,7 @@ class Controller{
     }
     imp(value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
        
-        this.bodyLiTamplete("oi",value,dataset?dataset:0)
+        this.bodyLiTamplete(value,dataset?dataset:0)
     }
     tamplateCode(value){
        let tag= `
@@ -292,7 +292,7 @@ class Controller{
     onP(){//Escuta todos os P que tem no DOM e ativado com o click
         $(".btnEdit").forEach(el=> {
             el.on("click",e=>{
-                let btn = e.target.parentNode.parentNode.parentNode.$("p")[0]
+                let btn = e.target.parentNode.parentNode.parentNode.parentNode.$("p")[0]
                 btn.contentEditable=true
                 btn.focus()
             })

@@ -142,7 +142,7 @@ class Controller{
         this.model.createFirebase(nameFolder,{msg:"Digite o nome do projeto..."})
     }
     //LIs dentro das pastas
-    bodyLiTamplete(el,value_p){
+    bodyLiTamplete(el,value_p,dataset){
         /*
             <div class="card">
                 <div class="card-header">
@@ -161,13 +161,13 @@ class Controller{
                 let header = card.addEl({tag:'div',class:'card-header'})
                     let h5 = header.addEl({tag:'h5', class:'card-title m-0',insertTag:'Featured'})
                 let card_body = card.addEl({tag:'div',class:'card-body'})
+                card_body.dataset.key=dataset
                     let h6 = card_body.addEl({tag:'h6',class:'card-title',insertTag:'Special title treatment'})
                     let p = card_body.addEl({tag:'p',class:'card-text',insertTag:value_p?this.tag(value_p):'Special title treatment'})
                     let a = card_body.addEl({tag:'a',class:'btn btn-primary',href:'#',insertTag:'Go somewhere'})
     }
     imp(value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
         let li = $('.ulsImp')[0].addEl({tag:"li",class:"lisImp col-12"})
-        dataset?li.dataset.key=dataset:0
         let ul = li.addEl({tag:"ul",class:"menu"})
         let lii = ul.addEl({tag:"li",class:"menuEdit"})
         lii.addEl({
@@ -177,7 +177,7 @@ class Controller{
         lii.addEl({
             tag:"input",class:"btnDel",alt:"delete",type:"image",src:"img/delete.png"
         })
-        this.bodyLiTamplete(li,value)
+        this.bodyLiTamplete(li,value,dataset?li.dataset.key=dataset:0)
     }
     tamplateCode(value){
        let tag= `
@@ -209,7 +209,8 @@ class Controller{
                     es=this.tamplateCode(es[1])
                     break;
                     case"youtube":
-                    let code = es[1].split("v=")[1].split("&")[0]
+                    let code = es[1].split("v=")[1].search("&")>-1?
+                    es[1].split("v=")[1].split("&")[0]:es[1].split("v=")[1].split("&")[0]
                     es=`<iframe width="460" height="215" src="https://www.youtube.com/embed/${code}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
                     break;
                     default:

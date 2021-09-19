@@ -185,7 +185,13 @@ class Controller{
                         });
                         [1,2,3,4,5,6].forEach(num=>{
                             anexos.addEl({tag:'input',type:'image',class:'anexos-item apk',src:'img/icons/apk.png'})
-                        })
+                        });
+                        [1,2,3,4,5,6].forEach(num=>{
+                            anexos.addEl({tag:'input',type:'image',class:'anexos-item video',src:'img/icons/video.svg'})
+                        });
+                        [1,2,3,4,5,6].forEach(num=>{
+                            anexos.addEl({tag:'input',type:'image',class:'anexos-item video',src:'img/icons/xlsx.svg'})
+                        });
 
                     card_body.addEl({tag:'p',class:'card-text ps',insertTag:value_p?this.tag(value_p):'Mensagem...'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-primary v anexo',value:'Add anexo'})

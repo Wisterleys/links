@@ -203,3 +203,16 @@ img{
 .btn-save.hidde{
     visibility: hidden;
 }
+.card-anexos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+}
+.anexos-item{
+    width: 60px;
+    height: 80px;
+    margin: 0px;
+    padding: 0px;
+}

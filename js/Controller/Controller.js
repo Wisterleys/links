@@ -194,7 +194,7 @@ class Controller{
                 
             break;
         }
-        modal?div.style="position:absolute;top:0px;left:0%;transform:translateX:50%;width:200px;display:flex;flex-direction:row;":0
+        modal?div.style="position:absolute;top:0px;left:0%;transform:translateX:50%;width:200px;display:flex;flex-direction:row;":0// Apenas para mostrar o arquivo dentro do modal file com posicionamento absoluto
     }
     bodyLiTamplete(title=false,value_p=false,dataset){
         /*
@@ -239,6 +239,8 @@ class Controller{
                             content.addEl({tag:'input',type:'button',class:'btn btn-primary',value:'Visualizar'})
                             content.addEl({tag:'input',type:'button',class:'btn btn-primary',value:'Download'})
                             content.addEl({tag:'input',type:'button',class:'btn btn-danger',value:'Deletar'})
+                        let modal_load =anexos.addEl({tag:'div',class:'loading',hidden:true})
+                            modal_load.addEl({tag:'img',src:'img/loading.gif',class:'container'})
                     card_body.addEl({tag:'p',class:'card-text ps',insertTag:value_p?this.tag(value_p):'Mensagem...'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-primary v anexo',value:'Add anexo'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-success btn-save hidde',value:'Salvar',style:'margin-left:10px;'})
@@ -375,6 +377,7 @@ class Controller{
         $('.anexo-file').forEach(file=>{
             file.addEventListener("change",e=>{
                 console.log(e.target.files)
+                e.target.parentNode.$(".loading")[0].hidden=false
             })
         })
     }

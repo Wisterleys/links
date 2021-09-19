@@ -288,3 +288,14 @@ img{
 .options input{
     margin: 5px;
 }
+.loading{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

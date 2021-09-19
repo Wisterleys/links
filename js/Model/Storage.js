@@ -20,8 +20,8 @@ class Storage{
                 let fileRef = firebase.storage().ref("/files").child(filename)
                 let task = fileRef.put(file)
                 task.on("state_changed",snapshot=>{
-                    document.querySelector("#progress").hidden=false
-                    document.querySelector("#progress div").style.width=`${this.returnsPercent(snapshot._delegate.bytesTransferred,snapshot._delegate.totalBytes)}%`
+                    /* document.querySelector("#progress").hidden=false
+                    document.querySelector("#progress div").style.width=`${this.returnsPercent(snapshot._delegate.bytesTransferred,snapshot._delegate.totalBytes)}%` */
                 },erro=>{
                     reject(erro)
                 },()=>{

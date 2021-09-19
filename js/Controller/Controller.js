@@ -27,6 +27,7 @@ class Controller{
         this.blurP()
         this.onDelete()
         this.onAnexo()
+        this.onFiles()
     }
     AllShow(tag){
         $(tag).forEach(t=>{
@@ -177,29 +178,39 @@ class Controller{
                 card_body.dataset.key=dataset
                     card_body.addEl({tag:'h6',class:'card-title ps',insertTag:title?title:'Título...'})
                     let anexos = card_body.addEl({tag:'div',class:'card-anexos row'});
-                        [1,2,3,4,5,6].forEach(num=>{
+                        [1,2].forEach(num=>{
                             anexos.addEl({tag:'input',type:'image',class:'anexos-item pdf',src:'img/icons/pdf-retangular.svg'})
                         });
-                        [1,2,3,4,5,6].forEach(num=>{
+                        [1,2].forEach(num=>{
                             anexos.addEl({tag:'input',type:'image',class:'anexos-item docx',src:'img/icons/docx.svg'})
                         });
-                        [1,2,3,4,5,6].forEach(num=>{
+                        [1,2].forEach(num=>{
                             anexos.addEl({tag:'input',type:'image',class:'anexos-item apk',src:'img/icons/apk.png'})
                         });
-                        [1,2,3,4,5,6].forEach(num=>{
+                        [1,2].forEach(num=>{
                             anexos.addEl({tag:'input',type:'image',class:'anexos-item video',src:'img/icons/video.svg'})
                         });
-                        [1,2,3,4,5,6].forEach(num=>{
+                        [1,2].forEach(num=>{
                             anexos.addEl({tag:'input',type:'image',class:'anexos-item xlsx',src:'img/icons/xlsx.svg'})
                         });
-                        [1,2,3,4,5,6].forEach(num=>{
+                        [1,2].forEach(num=>{
                             anexos.addEl({tag:'input',type:'image',class:'anexos-item audio',src:'img/icons/audio.svg'})
+                        });
+                        [1,2].forEach(num=>{
+                            anexos.addEl({tag:'input',type:'image',class:'anexos-item default-file',src:'img/icons/default-file.svg'})
                         });
 
                     card_body.addEl({tag:'p',class:'card-text ps',insertTag:value_p?this.tag(value_p):'Mensagem...'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-primary v anexo',value:'Add anexo'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-success btn-save hidde',value:'Salvar',style:'margin-left:10px;'})
                     card_body.addEl({tag:'input',type:'file',hidden:true,class:'anexo-file'})
+    }
+    onFiles(){
+        $(".anexos-item").forEach(item=>{
+            item.addEventListener("click",e=>{
+                console.log(e.target)
+            })
+        })
     }
     imp(title=false,value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
        

@@ -40,6 +40,7 @@ img{
     flex-wrap: wrap;
 }
 .lisImp{
+    position: relative;
     padding: 5px;
     border-style: outset;
     margin-bottom: 70px;
@@ -243,6 +244,11 @@ img{
 }
 .anexos-item.audio{
     width: 40px;
+    margin: 3px;
+    padding: 0px;
+}
+.anexos-item.default-file{
+    width: 60px;
     margin: 3px;
     padding: 0px;
 }

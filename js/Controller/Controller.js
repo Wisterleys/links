@@ -144,53 +144,53 @@ class Controller{
         this.model.createFirebase(nameFolder,{msg:"Mensagem..."})
     }
     //LIs dentro das pastas
-    filesTamplete(anexos,type,fileName,modal=false){
+    filesTamplete(anexos,type,fileName,file,modal=false){
         let div;
         type = type.split('.')[1]
         switch(type){
             case"pdf":
             case"PDF":
                  div = anexos.addEl({tag:'div',class:'anexos-item pdf row'})
-                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/pdf-retangular.svg'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/pdf-retangular.svg'}).dataset.file=JSON.stringify(file)
                     div.addEl({tag:'p',class:'col-12',insertTag:fileName})
             break;
             case"doc":
             case"docx":
                  div = anexos.addEl({tag:'div',class:'anexos-item docx row'})
-                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/docx.svg'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/docx.svg'}).dataset.file=JSON.stringify(file)
                     div.addEl({tag:'p',class:'col-12',insertTag:fileName})
                 
             break;
             case"apk":
              div = anexos.addEl({tag:'div',class:'anexos-item apk row'})
-                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/apk.png'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/apk.png'}).dataset.file=JSON.stringify(file)
                     div.addEl({tag:'p',class:'col-12',insertTag:fileName})
                 
             break;
             case"video":
             case"mp4":
              div = anexos.addEl({tag:'div',class:'anexos-item video row'})
-                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/video.svg'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/video.svg'}).dataset.file=JSON.stringify(file)
                     div.addEl({tag:'p',class:'col-12',insertTag:fileName})
                 
             break;
             case"xls":
             case"xlsx":
              div = anexos.addEl({tag:'div',class:'anexos-item xlsx row'})
-                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/xlsx.svg'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/xlsx.svg'}).dataset.file=JSON.stringify(file)
                     div.addEl({tag:'p',class:'col-12',insertTag:fileName})
                 
             break;
             case"mp3":
             case"audio":
              div = anexos.addEl({tag:'div',class:'anexos-item audio row'})
-                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/audio.svg'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/audio.svg'}).dataset.file=JSON.stringify(file)
                     div.addEl({tag:'p',class:'col-12',insertTag:fileName})
                 
             break;
             default:
                  div = anexos.addEl({tag:'div',class:'anexos-item default-file row'})
-                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/default-file.svg'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/default-file.svg'}).dataset.file=JSON.stringify(file)
                     div.addEl({tag:'p',class:'col-12',insertTag:fileName})
                 
             break;
@@ -234,13 +234,13 @@ class Controller{
                     let anexos = card_body.addEl({tag:'div',class:'card-anexos row'});
                     obj.files?anexos.dataset.files=JSON.stringify(obj.files):0;
                         obj.files?
-                        obj.files.forEach(file=>this.filesTamplete(anexos,file.fullPath,file.name)):0
+                        obj.files.forEach(file=>this.filesTamplete(anexos,file.fullPath,file.name,file)):0
                         let modal_files = anexos.addEl({tag:'div',class:'menu-modal-file',hidden:true})
                         modal_files.addEl({tag:'div',class:'x-file',insertTag:'X'})
                         let content = modal_files.addEl({tag:'div',class:'options'})
-                            content.addEl({tag:'input',type:'button',class:'btn btn-primary',value:'Visualizar'})
-                            content.addEl({tag:'input',type:'button',class:'btn btn-primary',value:'Download'})
-                            content.addEl({tag:'input',type:'button',class:'btn btn-danger',value:'Deletar'})
+                            content.addEl({tag:'h4',class:'h4'})
+                            content.addEl({tag:'a',href:'',target:'__blak',class:'btn btn-primary down',value:'Download',insertTag:'Download'})
+                            content.addEl({tag:'input',type:'button',class:'btn btn-danger delet',value:'Deletar'})
                         let modal_load =anexos.addEl({tag:'div',class:'loading',hidden:true})
                             modal_load.addEl({tag:'img',src:'img/loading.gif',class:'container'})
                     card_body.addEl({tag:'p',class:'card-text ps',insertTag:obj.msg?this.tag(obj.msg):'Mensagem...'})
@@ -251,8 +251,11 @@ class Controller{
     onFiles(){
         $(".anexos-item").forEach(item=>{
             item.on("click",e=>{
-                this.filesTamplete(e.target.parentNode.parentNode.$(".menu-modal-file > .options")[0],
-                'apk','maranhão teste vairas vezes de como é e depois fazendo',true)
+                const file = JSON.parse(e.target.dataset.file)
+                console.log(file)
+                e.target.parentNode.parentNode.$('.down')[0].href=file.customMetadata.downloadURL
+                e.target.parentNode.parentNode.$('.h4')[0].innerHTML=file.name
+               
                 e.target.parentNode.parentNode.$(".menu-modal-file")[0].hidden=false
             })
         })

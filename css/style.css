@@ -236,3 +236,13 @@ img{
     margin: 3px;
     padding: 0px;
 }
+.anexos-item.xlsx{
+    width: 60px;
+    margin: 3px;
+    padding: 0px;
+}
+.anexos-item.audio{
+    width: 40px;
+    margin: 3px;
+    padding: 0px;
+}

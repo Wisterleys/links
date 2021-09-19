@@ -217,39 +217,37 @@ img{
     
 }
 .anexos-item.pdf{
-    width: 60px;
-    height: 80px;
+    width: 100px;
     margin: 0px;
     padding: 0px;
 }
 .anexos-item.docx{
-    width: 60px;
-    height: 80px;
+    width: 100px;
     margin: 5px;
     padding: 0px;
 }
 .anexos-item.apk{
-    width: 60px;
+    width: 100px;
     margin: 5px;
     padding: 0px;
 }
 .anexos-item.video{
-    width: 60px;
+    width: 100px;
     margin: 3px;
     padding: 0px;
 }
 .anexos-item.xlsx{
-    width: 60px;
+    width: 100px;
     margin: 3px;
     padding: 0px;
 }
 .anexos-item.audio{
-    width: 40px;
+    width: 100px;
     margin: 3px;
     padding: 0px;
 }
 .anexos-item.default-file{
-    width: 60px;
+    width: 100px;
     margin: 3px;
     padding: 0px;
 }

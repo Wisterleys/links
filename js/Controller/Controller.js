@@ -144,6 +144,58 @@ class Controller{
         this.model.createFirebase(nameFolder,{msg:"Mensagem..."})
     }
     //LIs dentro das pastas
+    filesTamplete(anexos,name,fileName,modal=false){
+        let div;
+        switch(name){
+            case"pdf":
+            case"PDF":
+                 div = anexos.addEl({tag:'div',class:'anexos-item pdf row'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/pdf-retangular.svg'})
+                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+            break;
+            case"doc":
+            case"docx":
+                 div = anexos.addEl({tag:'div',class:'anexos-item docx row'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/docx.svg'})
+                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                
+            break;
+            case"apk":
+             div = anexos.addEl({tag:'div',class:'anexos-item apk row'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/apk.png'})
+                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                
+            break;
+            case"video":
+            case"mp4":
+             div = anexos.addEl({tag:'div',class:'anexos-item video row'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/video.svg'})
+                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                
+            break;
+            case"xls":
+            case"xlsx":
+             div = anexos.addEl({tag:'div',class:'anexos-item xlsx row'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/xlsx.svg'})
+                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                
+            break;
+            case"mp3":
+            case"audio":
+             div = anexos.addEl({tag:'div',class:'anexos-item audio row'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/audio.svg'})
+                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                
+            break;
+            default:
+                 div = anexos.addEl({tag:'div',class:'anexos-item default-file row'})
+                    div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/default-file.svg'})
+                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                
+            break;
+        }
+        modal?div.style="position:absolute;top:0px;left:0%;transform:translateX:50%;width:200px;display:flex;flex-direction:row;":0
+    }
     bodyLiTamplete(title=false,value_p=false,dataset){
         /*
             <div class="card">
@@ -178,27 +230,9 @@ class Controller{
                 card_body.dataset.key=dataset
                     card_body.addEl({tag:'h6',class:'card-title ps',insertTag:title?title:'Título...'})
                     let anexos = card_body.addEl({tag:'div',class:'card-anexos row'});
-                        [1,2].forEach(num=>{
-                            anexos.addEl({tag:'input',type:'image',class:'anexos-item pdf',src:'img/icons/pdf-retangular.svg'})
-                        });
-                        [1,2].forEach(num=>{
-                            anexos.addEl({tag:'input',type:'image',class:'anexos-item docx',src:'img/icons/docx.svg'})
-                        });
-                        [1,2].forEach(num=>{
-                            anexos.addEl({tag:'input',type:'image',class:'anexos-item apk',src:'img/icons/apk.png'})
-                        });
-                        [1,2].forEach(num=>{
-                            anexos.addEl({tag:'input',type:'image',class:'anexos-item video',src:'img/icons/video.svg'})
-                        });
-                        [1,2].forEach(num=>{
-                            anexos.addEl({tag:'input',type:'image',class:'anexos-item xlsx',src:'img/icons/xlsx.svg'})
-                        });
-                        [1,2].forEach(num=>{
-                            anexos.addEl({tag:'input',type:'image',class:'anexos-item audio',src:'img/icons/audio.svg'})
-                        });
-                        [1,2].forEach(num=>{
-                            anexos.addEl({tag:'input',type:'image',class:'anexos-item default-file',src:'img/icons/default-file.svg'})
-                        });
+                        ['video','audio','pdf','xls','doc'].forEach(file=>{
+                            this.filesTamplete(anexos,file,"teste maranhão da silveira camargo rodrigues")
+                        })
                         let modal_files = anexos.addEl({tag:'div',class:'menu-modal-file',hidden:true})
                         modal_files.addEl({tag:'div',class:'x-file',insertTag:'X'})
                         let content = modal_files.addEl({tag:'div',class:'options'})
@@ -213,11 +247,14 @@ class Controller{
     onFiles(){
         $(".anexos-item").forEach(item=>{
             item.on("click",e=>{
-                e.target.parentNode.$(".menu-modal-file")[0].hidden=false
+                this.filesTamplete(e.target.parentNode.parentNode.$(".menu-modal-file > .options")[0],
+                'apk','maranhão teste vairas vezes de como é e depois fazendo',true)
+                e.target.parentNode.parentNode.$(".menu-modal-file")[0].hidden=false
             })
         })
         $(".x-file").forEach(item=>{
             item.on("click",e=>{
+                
                 e.target.parentNode.hidden=true
             })
         })

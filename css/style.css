@@ -212,7 +212,22 @@ img{
 }
 .anexos-item{
     width: 60px;
+    
+}
+.anexos-item.pdf{
+    width: 60px;
     height: 80px;
     margin: 0px;
+    padding: 0px;
+}
+.anexos-item.docx{
+    width: 60px;
+    height: 80px;
+    margin: 5px;
+    padding: 0px;
+}
+.anexos-item.apk{
+    width: 60px;
+    margin: 5px;
     padding: 0px;
 }

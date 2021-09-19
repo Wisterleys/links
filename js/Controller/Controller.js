@@ -200,7 +200,7 @@ class Controller{
                             anexos.addEl({tag:'input',type:'image',class:'anexos-item default-file',src:'img/icons/default-file.svg'})
                         });
                         let modal_files = anexos.addEl({tag:'div',class:'menu-modal-file',hidden:true})
-                        modal_files.addEl({tag:'div',class:'x',insertTag:'X'})
+                        modal_files.addEl({tag:'div',class:'x-file',insertTag:'X'})
                         let content = modal_files.addEl({tag:'div',class:'options'})
                             content.addEl({tag:'input',type:'button',class:'btn btn-primary',value:'Visualizar'})
                             content.addEl({tag:'input',type:'button',class:'btn btn-primary',value:'Download'})
@@ -214,6 +214,11 @@ class Controller{
         $(".anexos-item").forEach(item=>{
             item.on("click",e=>{
                 e.target.parentNode.$(".menu-modal-file")[0].hidden=false
+            })
+        })
+        $(".x-file").forEach(item=>{
+            item.on("click",e=>{
+                e.target.parentNode.hidden=true
             })
         })
         

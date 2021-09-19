@@ -264,13 +264,21 @@ img{
     justify-content: center;
     align-items: center;
 }
-.menu-modal-file .x{
+.menu-modal-file .x-file{
     position: absolute;
     right: 0px;
     top: 0px;
-    background-color: yellowgreen;
+    width: 40px;
+    background-color: rgb(64, 95, 3);
     color: white;
     border-radius: 360px;
+    text-align: center;
+    cursor: pointer;
+
+}
+.menu-modal-file .x-file:hover{
+    
+    background-color: yellowgreen;
 
 }
 .options{

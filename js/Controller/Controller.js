@@ -26,6 +26,7 @@ class Controller{
         this.onP()
         this.blurP()
         this.onDelete()
+        this.onAnexo()
     }
     AllShow(tag){
         $(tag).forEach(t=>{
@@ -178,7 +179,7 @@ class Controller{
                     card_body.addEl({tag:'p',class:'card-text ps',insertTag:value_p?this.tag(value_p):'Mensagem...'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-primary v anexo',value:'Add anexo'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-success btn-save hidde',value:'Salvar',style:'margin-left:10px;'})
-                    card_body.addEl({tag:'input',type:'file',hidden:true})
+                    card_body.addEl({tag:'input',type:'file',hidden:true,class:'anexo-file'})
     }
     imp(title=false,value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
        
@@ -285,6 +286,18 @@ class Controller{
                 $("#warning").classList.toggle("fall")
             })
         });
+    }
+    onAnexo(){
+        $(".anexo").forEach(anexo=>{
+            anexo.addEventListener("click",e=>{
+                e.target.parentNode.$('input[type=file]')[0].click()
+            })
+        })
+        $('.anexo-file').forEach(file=>{
+            file.addEventListener("change",e=>{
+                console.log(e.target.files)
+            })
+        })
     }
     blurP(){//Escuta todos os P que tem no DOM e ativado quando clica no botão salvar
         $(".btn-save").forEach(el=> {

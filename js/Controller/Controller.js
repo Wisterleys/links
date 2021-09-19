@@ -144,9 +144,10 @@ class Controller{
         this.model.createFirebase(nameFolder,{msg:"Mensagem..."})
     }
     //LIs dentro das pastas
-    filesTamplete(anexos,name,fileName,modal=false){
+    filesTamplete(anexos,type,fileName,modal=false){
         let div;
-        switch(name){
+        type = type.split('.')[1]
+        switch(type){
             case"pdf":
             case"PDF":
                  div = anexos.addEl({tag:'div',class:'anexos-item pdf row'})
@@ -231,8 +232,9 @@ class Controller{
                 card_body.dataset.key=obj.key
                     card_body.addEl({tag:'h6',class:'card-title ps',insertTag:obj.title?obj.title:'Título...'})
                     let anexos = card_body.addEl({tag:'div',class:'card-anexos row'});
+                    obj.files?anexos.dataset.files=JSON.stringify(obj.files):0;
                         obj.files?
-                        obj.files.forEach(file=>this.filesTamplete(anexos,file.type,file.fileName)):0
+                        obj.files.forEach(file=>this.filesTamplete(anexos,file.fullPath,file.name)):0
                         let modal_files = anexos.addEl({tag:'div',class:'menu-modal-file',hidden:true})
                         modal_files.addEl({tag:'div',class:'x-file',insertTag:'X'})
                         let content = modal_files.addEl({tag:'div',class:'options'})
@@ -244,7 +246,7 @@ class Controller{
                     card_body.addEl({tag:'p',class:'card-text ps',insertTag:obj.msg?this.tag(obj.msg):'Mensagem...'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-primary v anexo',value:'Add anexo'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-success btn-save hidde',value:'Salvar',style:'margin-left:10px;'})
-                    card_body.addEl({tag:'input',type:'file',hidden:true,class:'anexo-file'})
+                    card_body.addEl({tag:'input',type:'file',hidden:true,class:'anexo-file',multiple:''})
     }
     onFiles(){
         $(".anexos-item").forEach(item=>{
@@ -368,6 +370,26 @@ class Controller{
             })
         });
     }
+    fileUpload(load,files){
+        const data_files = load.$(".card-anexos")[0].dataset.files?JSON.parse(load.$(".card-anexos")[0].dataset.files):[]
+        this.model.uploadTask(files)
+        .then(array=>{
+            array.forEach(f=>{//Consertar o nome do arquivo, ou seja, apenas o apelido e n o fullname e também preenche array data 
+                const part = f.name.split("-")
+                const name = part[0]
+                f.name = name
+                data_files.push(f)
+            })
+            this.update(this.currentNameFolder,
+                {
+                    title:load.$("h6")[0].innerHTML,
+                    msg:load.$("p")[0].innerHTML,
+                    files:JSON.stringify(data_files)
+                },
+                load.dataset.key)
+        })
+
+    }
     onAnexo(){
         $(".anexo").forEach(anexo=>{
             anexo.addEventListener("click",e=>{
@@ -377,7 +399,7 @@ class Controller{
         $('.anexo-file').forEach(file=>{
             file.addEventListener("change",e=>{
                 e.target.parentNode.$(".loading")[0].hidden=false
-                console.log(e.target.files)
+                this.fileUpload(e.target.parentNode,e.target.files)
                 
             })
         })
@@ -515,6 +537,7 @@ class Controller{
                             let obj={
                                 title:snapshotItem.val().title?snapshotItem.val().title:false,
                                 msg:snapshotItem.val().msg,
+                                files:snapshotItem.val().files?JSON.parse(snapshotItem.val().files):false,
                                 key:snapshotItem.key
                             } 
                             this.imp(obj)

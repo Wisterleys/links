@@ -199,7 +199,12 @@ class Controller{
                         [1,2].forEach(num=>{
                             anexos.addEl({tag:'input',type:'image',class:'anexos-item default-file',src:'img/icons/default-file.svg'})
                         });
-
+                        let modal_files = anexos.addEl({tag:'div',class:'menu-modal-file',hidden:true})
+                        modal_files.addEl({tag:'div',class:'x',insertTag:'X'})
+                        let content = modal_files.addEl({tag:'div',class:'options'})
+                            content.addEl({tag:'input',type:'button',class:'btn btn-primary',value:'Visualizar'})
+                            content.addEl({tag:'input',type:'button',class:'btn btn-primary',value:'Download'})
+                            content.addEl({tag:'input',type:'button',class:'btn btn-danger',value:'Deletar'})
                     card_body.addEl({tag:'p',class:'card-text ps',insertTag:value_p?this.tag(value_p):'Mensagem...'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-primary v anexo',value:'Add anexo'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-success btn-save hidde',value:'Salvar',style:'margin-left:10px;'})
@@ -207,10 +212,11 @@ class Controller{
     }
     onFiles(){
         $(".anexos-item").forEach(item=>{
-            item.addEventListener("click",e=>{
-                console.log(e.target)
+            item.on("click",e=>{
+                e.target.parentNode.$(".menu-modal-file")[0].hidden=false
             })
         })
+        
     }
     imp(title=false,value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
        

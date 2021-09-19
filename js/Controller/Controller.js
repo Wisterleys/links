@@ -196,7 +196,8 @@ class Controller{
         }
         modal?div.style="position:absolute;top:0px;left:0%;transform:translateX:50%;width:200px;display:flex;flex-direction:row;":0// Apenas para mostrar o arquivo dentro do modal file com posicionamento absoluto
     }
-    bodyLiTamplete(title=false,value_p=false,dataset){
+    bodyLiTamplete(obj){
+        //title=false,msg=false,dataset
         /*
             <div class="card">
                 <div class="card-header">
@@ -227,12 +228,11 @@ class Controller{
                     })
                     
                 let card_body = card.addEl({tag:'div',class:'card-body'})
-                card_body.dataset.key=dataset
-                    card_body.addEl({tag:'h6',class:'card-title ps',insertTag:title?title:'Título...'})
+                card_body.dataset.key=obj.key
+                    card_body.addEl({tag:'h6',class:'card-title ps',insertTag:obj.title?obj.title:'Título...'})
                     let anexos = card_body.addEl({tag:'div',class:'card-anexos row'});
-                        ['video','audio','pdf','xls','doc'].forEach(file=>{
-                            this.filesTamplete(anexos,file,"teste maranhão da silveira camargo rodrigues")
-                        })
+                        obj.files?
+                        obj.files.forEach(file=>this.filesTamplete(anexos,file.type,file.fileName)):0
                         let modal_files = anexos.addEl({tag:'div',class:'menu-modal-file',hidden:true})
                         modal_files.addEl({tag:'div',class:'x-file',insertTag:'X'})
                         let content = modal_files.addEl({tag:'div',class:'options'})
@@ -241,7 +241,7 @@ class Controller{
                             content.addEl({tag:'input',type:'button',class:'btn btn-danger',value:'Deletar'})
                         let modal_load =anexos.addEl({tag:'div',class:'loading',hidden:true})
                             modal_load.addEl({tag:'img',src:'img/loading.gif',class:'container'})
-                    card_body.addEl({tag:'p',class:'card-text ps',insertTag:value_p?this.tag(value_p):'Mensagem...'})
+                    card_body.addEl({tag:'p',class:'card-text ps',insertTag:obj.msg?this.tag(obj.msg):'Mensagem...'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-primary v anexo',value:'Add anexo'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-success btn-save hidde',value:'Salvar',style:'margin-left:10px;'})
                     card_body.addEl({tag:'input',type:'file',hidden:true,class:'anexo-file'})
@@ -262,9 +262,9 @@ class Controller{
         })
         
     }
-    imp(title=false,value=false,dataset=false){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
+    imp(obj){//Método responsavel para realizar impressão de LI corretamente na tela com as informações
        
-        this.bodyLiTamplete(title,value,dataset?dataset:0)
+        this.bodyLiTamplete(obj)
     }
     tamplateCode(value){
        let tag= `
@@ -376,8 +376,9 @@ class Controller{
         })
         $('.anexo-file').forEach(file=>{
             file.addEventListener("change",e=>{
-                console.log(e.target.files)
                 e.target.parentNode.$(".loading")[0].hidden=false
+                console.log(e.target.files)
+                
             })
         })
     }
@@ -511,8 +512,12 @@ class Controller{
                         })
                     }else{
                         snapshot.forEach(snapshotItem=>{
-                            let title = snapshotItem.val().title?snapshotItem.val().title:false
-                            this.imp(title,snapshotItem.val().msg,snapshotItem.key)
+                            let obj={
+                                title:snapshotItem.val().title?snapshotItem.val().title:false,
+                                msg:snapshotItem.val().msg,
+                                key:snapshotItem.key
+                            } 
+                            this.imp(obj)
                         })
                     }
                 }

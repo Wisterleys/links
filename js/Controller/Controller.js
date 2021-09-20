@@ -152,46 +152,46 @@ class Controller{
             case"PDF":
                  div = anexos.addEl({tag:'div',class:'anexos-item pdf row'})
                     div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/pdf-retangular.svg'}).dataset.file=JSON.stringify(file)
-                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                    div.addEl({tag:'div',class:'col-12',insertTag:fileName})
             break;
             case"doc":
             case"docx":
                  div = anexos.addEl({tag:'div',class:'anexos-item docx row'})
                     div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/docx.svg'}).dataset.file=JSON.stringify(file)
-                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                    div.addEl({tag:'div',class:'col-12',insertTag:fileName})
                 
             break;
             case"apk":
              div = anexos.addEl({tag:'div',class:'anexos-item apk row'})
                     div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/apk.png'}).dataset.file=JSON.stringify(file)
-                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                    div.addEl({tag:'div',class:'col-12',insertTag:fileName})
                 
             break;
             case"video":
             case"mp4":
              div = anexos.addEl({tag:'div',class:'anexos-item video row'})
                     div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/video.svg'}).dataset.file=JSON.stringify(file)
-                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                    div.addEl({tag:'div',class:'col-12',insertTag:fileName})
                 
             break;
             case"xls":
             case"xlsx":
              div = anexos.addEl({tag:'div',class:'anexos-item xlsx row'})
                     div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/xlsx.svg'}).dataset.file=JSON.stringify(file)
-                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                    div.addEl({tag:'div',class:'col-12',insertTag:fileName})
                 
             break;
             case"mp3":
             case"audio":
              div = anexos.addEl({tag:'div',class:'anexos-item audio row'})
                     div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/audio.svg'}).dataset.file=JSON.stringify(file)
-                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                    div.addEl({tag:'div',class:'col-12',insertTag:fileName})
                 
             break;
             default:
                  div = anexos.addEl({tag:'div',class:'anexos-item default-file row'})
                     div.addEl({tag:'input',type:'image',class:'col-12',src:'img/icons/default-file.svg'}).dataset.file=JSON.stringify(file)
-                    div.addEl({tag:'p',class:'col-12',insertTag:fileName})
+                    div.addEl({tag:'div',class:'col-12',insertTag:fileName})
                 
             break;
         }
@@ -242,7 +242,7 @@ class Controller{
                             content.addEl({tag:'a',href:'',target:'__blak',class:'btn btn-primary down',value:'Download',insertTag:'Download'})
                             content.addEl({tag:'input',type:'button',class:'btn btn-danger delet',value:'Deletar'})
                         let modal_load =anexos.addEl({tag:'div',class:'loading',hidden:true})
-                            modal_load.addEl({tag:'img',src:'img/loading.gif',class:'container'})
+                            modal_load.addEl({tag:'img',src:'img/loading.gif',style:'width:30%;'})
                     card_body.addEl({tag:'p',class:'card-text ps',insertTag:obj.msg?this.tag(obj.msg):'Mensagem...'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-primary v anexo',value:'Add anexo'})
                     card_body.addEl({tag:'input',type:'button',class:'btn btn-success btn-save hidde',value:'Salvar',style:'margin-left:10px;'})
@@ -263,6 +263,42 @@ class Controller{
             item.on("click",e=>{
                 
                 e.target.parentNode.hidden=true
+            })
+        })
+        $(".delet").forEach(item=>{
+            item.on("click",e=>{
+                const h6 = e.target.parentNode.parentNode.parentNode.parentNode.$("h6")[0].innerHTML
+                const p = e.target.parentNode.parentNode.parentNode.parentNode.$("p")[0].innerHTML
+                const key = e.target.parentNode.parentNode.parentNode.parentNode.dataset.key
+                const datas = JSON.parse(e.target.parentNode.parentNode.parentNode.dataset.files)
+                const data = JSON.parse(e.target.parentNode.parentNode.parentNode.$('.anexos-item > input[type=image]')[0].dataset.file)
+                console.log(key)
+                this.model.deleteStorage({fileName:data.fullPath.split('/')[1]})
+                .then(res=>{
+                    datas.forEach((d,i)=>{
+                        d.fullPath==data.fullPath?datas.splice(i, 1):0;
+                    })
+                    this.update(this.currentNameFolder,
+                        {
+                            title:h6,
+                            msg:p,
+                            files:JSON.stringify(datas)
+                        },
+                        key)
+                })
+                .catch(err=>{
+                    // Vai apagar o arquivo do firebase pois n foi encontrado no storage
+                    datas.forEach((d,i)=>{
+                        d.fullPath==data.fullPath?datas.splice(i, 1):0;
+                    })
+                    this.update(this.currentNameFolder,
+                        {
+                            title:h6,
+                            msg:p,
+                            files:JSON.stringify(datas)
+                        },
+                        key)
+                })
             })
         })
         

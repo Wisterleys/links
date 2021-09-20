@@ -101,7 +101,7 @@ class Controller{
             let resul = confirm("Deseja mesmo Excluir tudo que está selecionado?")
             if(resul){
                 this.deleteFolders()
-                .then(res=>res/* this.reloadPage() */)
+                .then(res=>this.reloadPage())
                 .catch(err=>console.log(err))
             }
             

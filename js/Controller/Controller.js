@@ -17,6 +17,7 @@ class Controller{
         this.folder[2]=true
         this.realTime("folders","#ul-folder")
         this.folder[2]=false
+        this.folder_alias;
     }
     initial(){//Método que inicia os eventos e intacia a classe Model
         this.model= new Model()
@@ -75,6 +76,7 @@ class Controller{
                 this.folder[2]=true
                 let data = JSON.parse(f.target.parentNode.dataset.key)
                 this.currentNameFolder=data.nameFolder
+                this.folder_alias = data.alias
                 this.realTime(data.nameFolder,".ulsImp")//Aqui passa o nome da pasta que será lida lá no firebase
                 $(".btnAdd")[0].hidden=false
                 $("#createFolder").hidden=true
@@ -217,7 +219,7 @@ class Controller{
                 let header = card.addEl({tag:'div',class:'card-headers row'})
                     let h5 = header.addEl({tag:'h5', class:'card-title m-0 col-6'})
                         h5.addEl({tag:'img',src:this.folder[1],style:'width:40px;margin-right:5px;'})
-                        h5.addEl({tag:'lable',insertTag:this.currentNameFolder})
+                        h5.addEl({tag:'lable',insertTag:this.folder_alias})
                     let ul = header.addEl({tag:"ul",class:"menu col-6"})
                     let lii = ul.addEl({tag:"li",class:"menuEdit"})
                     lii.addEl({

@@ -232,6 +232,7 @@ class Controller{
                     
                 let card_body = card.addEl({tag:'div',class:'card-body'})
                 card_body.dataset.key=obj.key
+                card_body.dataset.obj=JSON.stringify(obj)
                     card_body.addEl({tag:'h6',class:'card-title ps',insertTag:obj.title?obj.title:'Título...'})
                     let anexos = card_body.addEl({tag:'div',class:'card-anexos row'});
                     obj.files?anexos.dataset.files=JSON.stringify(obj.files):0;
@@ -254,7 +255,6 @@ class Controller{
         $(".anexos-item").forEach(item=>{
             item.on("click",e=>{
                 const file = JSON.parse(e.target.dataset.file)
-                console.log(file)
                 e.target.parentNode.parentNode.$('.down')[0].href=file.customMetadata.downloadURL
                 e.target.parentNode.parentNode.$('.h4')[0].innerHTML=file.name
                
@@ -274,7 +274,6 @@ class Controller{
                 const key = e.target.parentNode.parentNode.parentNode.parentNode.dataset.key
                 const datas = JSON.parse(e.target.parentNode.parentNode.parentNode.dataset.files)
                 const data = JSON.parse(e.target.parentNode.parentNode.parentNode.$('.anexos-item > input[type=image]')[0].dataset.file)
-                console.log(key)
                 this.model.deleteStorage({fileName:data.fullPath.split('/')[1]})
                 .then(res=>{
                     datas.forEach((d,i)=>{
@@ -421,6 +420,7 @@ class Controller{
                 f.name = name
                 data_files.push(f)
             })
+            console.log(data_files)
             this.update(this.currentNameFolder,
                 {
                     title:load.$("h6")[0].innerHTML,
@@ -449,11 +449,14 @@ class Controller{
         $(".btn-save").forEach(el=> {
             el.on("click",e=>{
                 $(".ps").forEach(p=>p.contentEditable=false)
-                this.update(this.currentNameFolder,
-                    {
-                        title:e.target.parentNode.$("h6")[0].innerHTML,
-                        msg:e.target.parentNode.$("p")[0].innerHTML
-                    },
+                let data = JSON.parse(e.target.parentNode.dataset.obj)
+                
+                this.update(this.currentNameFolder,{
+                    title:e.target.parentNode.$("h6")[0].innerHTML,
+                    msg:e.target.parentNode.$("p")[0].innerHTML,
+                    files:JSON.stringify(data.files)
+
+                },
                     e.target.parentNode.dataset.key)
                 this.save(e.target.parentNode.dataset.key)
             })
@@ -613,7 +616,7 @@ class Controller{
                             let obj={
                                 title:snapshotItem.val().title?snapshotItem.val().title:false,
                                 msg:snapshotItem.val().msg,
-                                files:snapshotItem.val().files?JSON.parse(snapshotItem.val().files):false,
+                                files:snapshotItem.val().files?JSON.parse(snapshotItem.val().files):[],
                                 key:snapshotItem.key
                             } 
                             this.imp(obj)

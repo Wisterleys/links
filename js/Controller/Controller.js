@@ -101,7 +101,7 @@ class Controller{
             let resul = confirm("Deseja mesmo Excluir tudo que está selecionado?")
             if(resul){
                 this.deleteFolders()
-                .then(res=>this.reloadPage())
+                .then(res=>res/* this.reloadPage() */)
                 .catch(err=>console.log(err))
             }
             
@@ -471,6 +471,21 @@ class Controller{
             })
         });
     }
+    deleteAllFiles(array){
+        let promises=[]
+        for (let index = array.length-1; index >= 0; index--) {
+            promises.push(new Promise((resolve,rejec)=>{
+                this.model.deleteStorage({fileName:array[index].fullPath.split('/')[1]})
+                .then(res=>{
+                    resolve(res)
+                    
+                })
+                .catch(err=>rejec(err))
+            }))
+            
+        }
+        return Promise.all(promises)
+    }
     deleteFolder(vetor){
         return new Promise((resolve,reject)=>{
             let promises=[]
@@ -482,11 +497,31 @@ class Controller{
                         if(snapshot.val()){
                             snapshot.forEach(item=>{
                                 promisesTwo.push(new Promise((r,rj)=>{
-                                    this.model.deleteFirebase(folder.nameFolder,item.key)
-                                    .then(msg=>{
-                                        r(msg)
-                                    })
-                                    .catch(err=>rj(err))
+                                    
+                                    if(item.val().files){
+                                        
+                                        this.deleteAllFiles(JSON.parse(item.val().files))
+                                        .then(fil=>{
+                                            this.model.deleteFirebase(folder.nameFolder,item.key)
+                                            .then(msg=>{
+                                                r(msg)
+                                            })
+                                            .catch(err=>rj(err))
+                                            })
+                                        .catch(er=>{
+                                            this.model.deleteFirebase(folder.nameFolder,item.key)
+                                            .then(msg=>{
+                                                r(msg)
+                                            })
+                                            .catch(err=>rj(err))
+                                        })
+                                    }else{
+                                        this.model.deleteFirebase(folder.nameFolder,item.key)
+                                        .then(msg=>{
+                                            r(msg)
+                                        })
+                                        .catch(err=>rj(err))
+                                    }
                                 }))
                             })
                             Promise.all(promisesTwo)

@@ -15,7 +15,7 @@ class Controller{
         this.menuFolders($("#menu-folders"))
         this.height=window.innerHeight
         this.folder[2]=true
-        this.realTime("folders","#ul-folder")
+        this.realTime("folders","#ul-folder");
         this.folder[2]=false
         this.folder_alias;
     }

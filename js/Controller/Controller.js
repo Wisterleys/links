@@ -377,15 +377,32 @@ class Controller{
     }
     onBtnDelete(){
         $("#exc").on("click",e=>{
-            this.model.deleteFirebase(this.currentNameFolder,this.dataset.key)
-            this.dataset.el.remove()
-            $("#x").click()
+            
+            const data = JSON.parse(e.target.parentNode.dataset.obj)
+            if(data.files.length>0){
+                this.deleteAllFiles(data.files)
+                .then(res=>{
+                    this.model.deleteFirebase(this.currentNameFolder,this.dataset.key)
+                    this.dataset.el.remove()
+                    $("#x").click()
+                })
+                .catch(err=>{
+                    this.model.deleteFirebase(this.currentNameFolder,this.dataset.key)
+                    this.dataset.el.remove()
+                    $("#x").click()
+                })
+            }else{
+                this.model.deleteFirebase(this.currentNameFolder,this.dataset.key)
+                this.dataset.el.remove()
+                $("#x").click()
+            }
         })
     }
     onDelete(){//Escuta para o modal deletar
         $(".btnDel").forEach(el=> {
             el.on("click",e=>{
                 this.dataset.key=e.target.parentNode.parentNode.parentNode.parentNode.$(".card-body")[0].dataset.key
+                let obj =e.target.parentNode.parentNode.parentNode.parentNode.$(".card-body")[0].dataset.obj
                 this.dataset.el=e.target.parentNode.parentNode.parentNode.parentNode.$(".card-body")[0]
                 let el = e.target.parentNode.parentNode.parentNode.parentNode.$(".card-body")[0].cloneNode(true)
              
@@ -406,6 +423,7 @@ class Controller{
                     $("#sw").style.overflowY="auto"
                     $("#warning").style.transform="translate(-50%,-50%)"
                 }
+                $("#arnaldo").dataset.obj = obj;
                 $("#warning").classList.toggle("fall")
             })
         });

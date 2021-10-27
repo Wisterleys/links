@@ -1,10 +1,15 @@
 const FIELDS={}
 new Controller()
+
 let play =document.querySelector("#girar")
-play.addEventListener("click",()=>{
-     document.querySelectorAll(".back-video");
+
+function clickPlay(el){
     document.querySelectorAll(".back-video").forEach(video=>{
         video.play()
-        .then(e=>play.remove())
+        .then(e=>play.parentNode.remove())
     })
+}
+play.addEventListener("click",()=>{
+     clickPlay();
+    
 })

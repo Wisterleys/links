@@ -340,7 +340,12 @@ class Controller{
                     case"youtube":
                     let code = es[1].split("v=")[1].search("&")>-1?
                     es[1].split("v=")[1].split("&")[0]:es[1].split("v=")[1].split("&")[0]
-                    es=`<iframe width="460" height="215" src="https://www.youtube.com/embed/${code}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+                    es=`
+                    <div class="embed-responsive embed-responsive-21by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${code}"></iframe>
+                    </div>
+                    `
+                    
                     break;
                     default:
                         es=`${es[0]} ${es[1]}`

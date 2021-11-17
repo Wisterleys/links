@@ -338,6 +338,7 @@ class Controller{
                     es=this.tamplateCode(es[1])
                     break;
                     case"youtube":
+                   case"YouTube":
                     let code = es[1].split("v=")[1].search("&")>-1?
                     es[1].split("v=")[1].split("&")[0]:es[1].split("v=")[1].split("&")[0]
                     es=`

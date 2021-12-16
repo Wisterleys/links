@@ -9,7 +9,7 @@ function clickPlay(el){
         .then(e=>play.parentNode.remove())
     })
 }
-play.addEventListener("click",()=>{
+/* play.addEventListener("click",()=>{
      clickPlay();
     
-})
+}) */
